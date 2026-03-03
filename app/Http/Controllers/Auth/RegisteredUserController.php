@@ -89,6 +89,22 @@ class RegisteredUserController extends Controller
             'is_active'      => true,
         ]);
 
+        // Role selain kandidat → simpan intent dan redirect ke login (jangan buat user)
+        session([
+            'register_non_kandidat' => [
+                'username'   => $user->username,
+                'role'       => $user->role,
+            ],
+        ]);
+
+        return redirect()->route('login')
+            ->with('status', 'Akun berhasil dibuat. Silakan login menggunakan kredensial Anda.');
+
+
+
+
+
+
         event(new Registered($user));
         Auth::login($user);
 

@@ -300,6 +300,9 @@
             // Ubah teks dan ikon tombol
             const label = document.getElementById('btn-label');
             if (label) label.textContent = isKandidat ? 'Next' : 'Daftar';
+
+            const warningEl = document.getElementById('non-kandidat-warning');
+            if (warningEl) warningEl.style.display = isKandidat ? 'none' : 'block';
         }
 
         // Trigger saat halaman dimuat (untuk kasus old() value setelah validasi error)

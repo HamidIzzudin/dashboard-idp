@@ -28,6 +28,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // setelah Auth::attempt / setelah user di-retrieve dan login dilakukan
+        if (session()->has('register_non_kandidat')) {
+            $intent = session('register_non_kandidat');
+            if ($user->role !== $intent['role']) {
+                Auth::logout();
+                return back()->withErrors(['username' => 'Role akun tidak sesuai dengan yang dipilih saat registrasi.']);
+            }
+            // Role cocok → hapus session intent
+            session()->forget('register_non_kandidat');
+        }
+
         $role = Auth::user()->role;
 
         return match($role) {

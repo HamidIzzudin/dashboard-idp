@@ -25,6 +25,9 @@
         .login-bg {
             background: #4B586F;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .login-card {
