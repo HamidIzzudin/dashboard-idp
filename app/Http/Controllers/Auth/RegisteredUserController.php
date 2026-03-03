@@ -31,7 +31,8 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'username'       => ['required', 'string', 'min:3', 'max:50', 'unique:users,username', 'regex:/^[a-zA-Z0-9._-]+$/'],
-            'password'       => ['required', 'confirmed', Rules\Password::defaults()],
+            'email'          => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password'       => ['required', 'confirmed', Rules\Password::defaults()->mixedCase()->numbers()],
             'nama'           => ['required', 'string', 'max:255'],
             'perusahaan'     => ['required', 'string', 'max:255'],
             'departemen'     => ['required', 'string', 'max:255'],
@@ -44,8 +45,13 @@ class RegisteredUserController extends Controller
             'username.min'        => 'Username minimal 3 karakter.',
             'username.unique'     => 'Username sudah digunakan.',
             'username.regex'      => 'Username hanya boleh huruf, angka, titik, underscore, atau strip.',
+            'email.required'      => 'Email wajib diisi.',
+            'email.email'         => 'Format email tidak valid.',
+            'email.unique'        => 'Email sudah digunakan.',
             'password.required'   => 'Password wajib diisi.',
             'password.confirmed'  => 'Konfirmasi password tidak cocok.',
+            'password.mixed_case' => 'Password harus mengandung minimal 1 huruf kapital.',
+            'password.numbers'    => 'Password harus mengandung minimal 1 angka.',
             'nama.required'       => 'Nama lengkap wajib diisi.',
             'perusahaan.required' => 'Perusahaan wajib dipilih.',
             'departemen.required' => 'Departemen wajib dipilih.',
@@ -59,6 +65,7 @@ class RegisteredUserController extends Controller
                 'register_data' => [
                     'nama'           => $request->nama,
                     'username'       => $request->username,
+                    'email'          => $request->email,
                     'password'       => $request->password, // di-hash di step terakhir
                     'role'           => 'kandidat',
                     'perusahaan'     => $request->perusahaan,
@@ -98,7 +105,7 @@ class RegisteredUserController extends Controller
         ]);
 
         return redirect()->route('login')
-            ->with('status', 'Akun berhasil dibuat. Silahkan login dengan username dan password yang telah Anda buat.');
+            ->with('status', 'Akun Anda berhasil dibuat! Silakan masuk menggunakan username "' . $user->username . '" atau email "' . $user->email . '".');
 
 
 
@@ -210,6 +217,6 @@ class RegisteredUserController extends Controller
         // Biarkan user login manual via login page
 
         return redirect()->route('login')
-            ->with('status', 'Kompetensi berhasil disimpan. Silahkan login dengan username dan password yang telah Anda buat.');
+            ->with('status', 'Pendaftaran berhasil! Akun Anda sedang menunggu persetujuan admin. Silakan masuk menggunakan username "' . $user->username . '" atau email "' . $user->email . '".');
     }
 }

@@ -27,28 +27,26 @@ class PasswordResetLinkController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'username' => ['required', 'string'],
-            'email'    => ['required', 'email'],
+            'login' => ['required', 'string'],
         ]);
 
-        // Pastikan kombinasi username & email cocok
-        $user = User::where('username', $request->username)
-                     ->where('email', $request->email)
-                     ->first();
+        // Cari user berdasarkan username atau email
+        $login = $request->input('login');
+        $user = User::where('email', $login)
+                    ->orWhere('username', $login)
+                    ->first();
 
         if (! $user) {
             return back()
-                ->withInput($request->only('username', 'email'))
-                ->withErrors(['email' => 'Username dan email tidak cocok dengan data kami.']);
+                ->withInput($request->only('login'))
+                ->withErrors(['login' => 'Username atau email tidak ditemukan.']);
         }
 
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
+        $status = Password::sendResetLink(['email' => $user->email]);
 
         return $status == Password::RESET_LINK_SENT
                     ? back()->with('status', __($status))
-                    : back()->withInput($request->only('username', 'email'))
-                        ->withErrors(['email' => __($status)]);
+                    : back()->withInput($request->only('login'))
+                        ->withErrors(['login' => __($status)]);
     }
 }

@@ -304,6 +304,40 @@
             margin-bottom: 1rem;
         }
 
+        /* ── NOTIFIKASI SUKSES REGISTRASI ── */
+        .reg-success-alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 1.5px solid #86efac;
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1.25rem;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .reg-success-icon {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            color: #16a34a;
+            margin-top: 1px;
+        }
+
+        .reg-success-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .reg-success-text {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #15803d;
+            line-height: 1.55;
+            margin: 0;
+        }
+
         /* ── FORGOT PASSWORD ── */
         .fp-header {
             text-align: center;
