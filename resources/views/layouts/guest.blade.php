@@ -11,7 +11,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- Scripts -->
@@ -19,17 +19,18 @@
 
     <style>
         * {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         .login-bg {
-            background-image: 
+            background-image:
                 linear-gradient(135deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.45) 100%),
                 url('{{ asset('storage/images/Gambar TS.png') }}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-color: #4B586F; /* fallback color */
+            background-color: #4B586F;
+            /* fallback color */
             min-height: 100vh;
             display: flex;
             align-items: center;
