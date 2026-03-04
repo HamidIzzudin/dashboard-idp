@@ -324,7 +324,7 @@
                     ];
                     $maxScore = 5;
                 @endphp
-                <div class="space-y-3">
+                <div class="space-y-5">
                     @foreach ($kompetensiBars as $label => $score)
                         @php
                             // Skala 1-5: nilai 1 = 0%, nilai 5 = 100%
@@ -375,8 +375,8 @@
                             $filledDash = ($d['done'] / $d['total']) * $circ;
                             $emptyDash = $circ - $filledDash;
                         @endphp
-                        <div class="flex flex-col items-center gap-2">
-                            <div class="relative w-28 h-28">
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="relative w-40 h-40">
                                 <svg viewBox="0 0 100 100" class="w-full h-full">
                                     {{-- Track --}}
                                     <circle cx="50" cy="50" r="{{ $r }}" fill="none"
@@ -385,14 +385,14 @@
                                     <circle cx="50" cy="50" r="{{ $r }}" fill="none"
                                         stroke="{{ $d['color'] }}" stroke-width="12"
                                         stroke-dasharray="{{ $filledDash }} {{ $emptyDash }}"
-                                        stroke-linecap="round" class="donut-ring" />
+                                        stroke-linecap="round" class="donut-ring" transform="rotate(-90 50 50)" />
                                 </svg>
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <span
-                                        class="text-lg font-bold text-gray-700">{{ $d['done'] }}/{{ $d['total'] }}</span>
+                                        class="text-2xl font-bold text-gray-700">{{ $d['done'] }}/{{ $d['total'] }}</span>
                                 </div>
                             </div>
-                            <span class="text-xs font-semibold text-gray-600">{{ $label }}</span>
+                            <span class="text-sm font-semibold text-gray-600">{{ $label }}</span>
                         </div>
                     @endforeach
                 </div>
@@ -510,26 +510,26 @@
 
                 {{-- Exposure --}}
                 <div class="bg-white rounded-xl p-5 flex flex-col justify-between">
-                    <div>
+                    <div class="flex flex-col h-full">
                         <div class="flex items-center gap-2 mb-2">
                             <span class="text-gray-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                 </svg>
                             </span>
-                            <h3 class="text-sm font-bold text-gray-800">Exposure</h3>
+                            <h3 class="text-base font-bold text-gray-800">Exposure</h3>
                         </div>
-                        <p class="text-xs text-teal-600 font-semibold mb-1">Exposure / Assignment</p>
-                        <p class="text-xs text-gray-600 mb-1 font-medium">Contoh kegiatan:</p>
-                        <ul class="text-xs text-gray-600 space-y-0.5 list-disc list-inside mb-3">
+                        <p class="text-sm text-teal-600 font-semibold mb-1">Exposure / Assignment</p>
+                        <p class="text-sm text-gray-600 mb-1 font-medium">Contoh kegiatan:</p>
+                        <ul class="text-sm text-gray-600 space-y-0.5 list-disc list-inside mb-3">
                             <li>Meeting</li>
                             <li>Shadowing</li>
                             <li>Acting</li>
                             <li>Project</li>
                         </ul>
-                        <p class="text-xs text-teal-600 font-semibold">Bobot : 70%</p>
+                        <p class="text-sm text-teal-600 font-bold text-right mt-auto">Bobot : 70%</p>
                     </div>
                     <button
                         class="mt-4 w-full bg-amber-400 hover:bg-amber-500 text-white text-sm font-semibold py-2 rounded-lg transition active:scale-95">
@@ -539,25 +539,25 @@
 
                 {{-- Mentoring --}}
                 <div class="bg-white rounded-xl p-5 flex flex-col justify-between">
-                    <div>
+                    <div class="flex flex-col h-full">
                         <div class="flex items-center gap-2 mb-2">
                             <span class="text-gray-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                 </svg>
                             </span>
-                            <h3 class="text-sm font-bold text-gray-800">Mentoring</h3>
+                            <h3 class="text-base font-bold text-gray-800">Mentoring</h3>
                         </div>
-                        <p class="text-xs text-teal-600 font-semibold mb-1">Mentoring / Coaching</p>
-                        <p class="text-xs text-gray-600 mb-1 font-medium">Contoh kegiatan:</p>
-                        <ul class="text-xs text-gray-600 space-y-0.5 list-disc list-inside mb-3">
+                        <p class="text-sm text-teal-600 font-semibold mb-1">Mentoring / Coaching</p>
+                        <p class="text-sm text-gray-600 mb-1 font-medium">Contoh kegiatan:</p>
+                        <ul class="text-sm text-gray-600 space-y-0.5 list-disc list-inside mb-3">
                             <li>Penjadwalan</li>
                             <li>Catatan singkat</li>
                             <li>Action plan</li>
                         </ul>
-                        <p class="text-xs text-teal-600 font-semibold">Bobot : 20%</p>
+                        <p class="text-sm text-teal-600 font-bold text-right mt-auto">Bobot : 20%</p>
                     </div>
                     <button
                         class="mt-4 w-full bg-amber-400 hover:bg-amber-500 text-white text-sm font-semibold py-2 rounded-lg transition active:scale-95">
@@ -567,26 +567,26 @@
 
                 {{-- Learning --}}
                 <div class="bg-white rounded-xl p-5 flex flex-col justify-between">
-                    <div>
+                    <div class="flex flex-col h-full">
                         <div class="flex items-center gap-2 mb-2">
                             <span class="text-gray-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                 </svg>
                             </span>
-                            <h3 class="text-sm font-bold text-gray-800">Learning</h3>
+                            <h3 class="text-base font-bold text-gray-800">Learning</h3>
                         </div>
-                        <p class="text-xs text-teal-600 font-semibold mb-1">Learning</p>
-                        <p class="text-xs text-gray-600 mb-1 font-medium">Contoh kegiatan:</p>
-                        <ul class="text-xs text-gray-600 space-y-0.5 list-disc list-inside mb-3">
+                        <p class="text-sm text-teal-600 font-semibold mb-1">Learning</p>
+                        <p class="text-sm text-gray-600 mb-1 font-medium">Contoh kegiatan:</p>
+                        <ul class="text-sm text-gray-600 space-y-0.5 list-disc list-inside mb-3">
                             <li>LMS Internal</li>
                             <li>Youtube edukatif</li>
                             <li>Artikel</li>
                             <li>Online course</li>
                         </ul>
-                        <p class="text-xs text-teal-600 font-semibold">Bobot : 10%</p>
+                        <p class="text-sm text-teal-600 font-bold text-right mt-auto">Bobot : 10%</p>
                     </div>
                     <button
                         class="mt-4 w-full bg-amber-400 hover:bg-amber-500 text-white text-sm font-semibold py-2 rounded-lg transition active:scale-95">
