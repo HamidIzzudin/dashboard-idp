@@ -209,8 +209,8 @@
                                             <span class="text-[13px] text-gray-800 pr-4">Strategic Thinking</span>
                                             <div class="flex h-5 w-full">
                                                 <!-- Strategic thinking dibatasi mentok width nya di contoh gambar-->
-                                                <div class="rounded bg-[#4c5c74]" style="width: {{ ($kompetensi->strategic_thinking / 5) * 100 }}%"></div>
-                                                <div class="bg-transparent" style="width: {{ 100 - (($kompetensi->strategic_thinking / 5) * 100) }}%"></div>
+                                                 <div class="rounded-l bg-[#4c5c74]" style="width: {{ ($kompetensi->achievement_orientation / 5) * 100 }}%"></div>
+                                                <div class="rounded-r bg-[#a49c8c]" style="width: {{ 100 - (($kompetensi->achievement_orientation / 5) * 100) }}%"></div>
                                             </div>
                                         </div>
                                     </div>

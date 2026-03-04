@@ -11,7 +11,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- Scripts -->
@@ -19,17 +19,18 @@
 
     <style>
         * {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         .login-bg {
-            background-image: 
-                linear-gradient(135deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.45) 100%),
+            background-image:
+                linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%),
                 url('{{ asset('storage/images/Bg TS.png') }}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-color: #4B586F; /* fallback color */
+            background-color: #1e293b;
+            /* fallback color */
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -37,10 +38,12 @@
         }
 
         .login-card {
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35), 0 8px 20px rgba(0, 0, 0, 0.15);
-            padding: 2.5rem 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 3rem 2.5rem;
             width: 100%;
             max-width: 440px;
             max-height: 90vh;
@@ -193,22 +196,22 @@
 
         .btn-login {
             width: 100%;
-            padding: 0.8rem 1rem;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+            padding: 0.9rem 1.5rem;
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 700;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
-            letter-spacing: 0.2px;
-            margin-top: 1.6rem;
+            gap: 0.75rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+            letter-spacing: 0.5px;
+            margin-top: 2rem;
         }
 
         .btn-login:hover {
@@ -302,6 +305,79 @@
             font-size: 0.82rem;
             margin-bottom: 1rem;
         }
+
+        /* ── NOTIFIKASI SUKSES REGISTRASI ── */
+        .reg-success-alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 1.5px solid #86efac;
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1.25rem;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .reg-success-icon {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            color: #16a34a;
+            margin-top: 1px;
+        }
+
+        .reg-success-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .reg-success-text {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #15803d;
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* ── FORGOT PASSWORD ── */
+        .fp-header {
+            text-align: center;
+            margin-bottom: 1.75rem;
+        }
+
+        .fp-icon-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            color: #16a34a;
+        }
+
+        .fp-icon-wrap svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .fp-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            line-height: 1.35;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .fp-subtitle {
+            font-size: 0.82rem;
+            color: #94a3b8;
+            font-weight: 400;
+            line-height: 1.6;
+        }
     </style>
 </head>
 
@@ -309,7 +385,7 @@
     <div class="login-bg flex items-center justify-center px-4 py-8">
 
         <div class="login-card">
-            <!-- Title hanya muncul di halaman login (bukan register) -->
+            <!-- Title hanya muncul di halaman login -->
             @if (request()->routeIs('login'))
                 <h1 class="login-title">Individual<br>Development Plan</h1>
             @endif
