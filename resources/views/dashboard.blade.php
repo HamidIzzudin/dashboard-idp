@@ -20,12 +20,12 @@
 
 
 
-     <!-- PROFILE SECTION (dari registrasi awal) -->
+    <!-- PROFILE SECTION (dari registrasi awal) -->
     <div class="profile-card">
         <h3>{{ $user->nama }}</h3>
         <p>Perusahaan: {{ $user->perusahaan }}</p>
         <p>Departemen: {{ $user->departemen }}</p>
-        <p>Role Target: {{ $user->jabatan_target }}</p>
+        <p>Jabatan yang Dituju: {{ $user->jabatan_target }}</p>
         <p>Mentor: {{ $user->mentor_id ? $user->mentor->nama : '-' }}</p>
         <p>Atasan: {{ $user->atasan_id ? $user->atasan->nama : '-' }}</p>
     </div>
@@ -35,7 +35,7 @@
         @if ($kompetensi)
             <!-- Gunakan library Chart.js / ApexCharts / Recharts -->
             <canvas id="competencyChart"></canvas>
-            
+
             <script>
                 const data = {
                     integrity: {{ $kompetensi->integrity }},

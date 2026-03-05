@@ -222,7 +222,7 @@
                 <select id="role" name="role" class="form-select" required
                     onchange="handleRoleChange(this.value)">
                     <option value="" disabled {{ old('role') ? '' : 'selected' }}>Pilih role</option>
-                    <option value="kandidat" {{ old('role') == 'kandidat' ? 'selected' : '' }}>Kandidat</option>
+                    <option value="kandidat" {{ old('role') == 'kandidat' ? 'selected' : '' }}>Talent</option>
                     <option value="atasan" {{ old('role') == 'atasan' ? 'selected' : '' }}>Atasan</option>
                     <option value="mentor" {{ old('role') == 'mentor' ? 'selected' : '' }}>Mentor</option>
                     <option value="finance" {{ old('role') == 'finance' ? 'selected' : '' }}>Finance</option>
@@ -243,10 +243,10 @@
             @enderror
         </div>
 
-        {{-- ── ROLE TARGET (hanya tampil untuk Kandidat) ─── --}}
+        {{-- ── JABATAN YANG DITUJU (hanya tampil untuk Talent) ── --}}
         <div id="field-jabatan-target"
             style="margin-bottom: 1rem; display: {{ old('role') == 'kandidat' ? 'block' : 'none' }}">
-            <label for="jabatan_target" class="form-label">Role Target</label>
+            <label for="jabatan_target" class="form-label">Jabatan yang Dituju</label>
             <div class="input-wrapper">
                 <select id="jabatan_target" name="jabatan_target" class="form-select">
                     <option value="" disabled {{ old('jabatan_target') ? '' : 'selected' }}>Pilih role target
@@ -267,7 +267,7 @@
             </div>
         </div>
 
-        {{-- ── MENTOR (hanya tampil untuk Kandidat) ─────── --}}
+        {{-- ── MENTOR (hanya tampil untuk Talent) ───────── --}}
         <div id="field-mentor"
             style="margin-bottom: 1rem; display: {{ old('role') == 'kandidat' ? 'block' : 'none' }}">
             <label for="mentor_id" class="form-label">Mentor</label>
@@ -283,7 +283,7 @@
             </div>
         </div>
 
-        {{-- ── ATASAN (hanya tampil untuk Kandidat) ─────── --}}
+        {{-- ── ATASAN (hanya tampil untuk Talent) ───────── --}}
         <div id="field-atasan"
             style="margin-bottom: 1rem; display: {{ old('role') == 'kandidat' ? 'block' : 'none' }}">
             <label for="atasan_id" class="form-label">Atasan</label>

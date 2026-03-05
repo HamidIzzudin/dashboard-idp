@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Kandidat – Individual Development Plan</title>
+    <title>Dashboard Talent – Individual Development Plan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -127,27 +127,22 @@
 
         /* ── Navbar outer wrapper ── */
         .navbar-outer {
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 50;
             width: 100%;
             display: flex;
             align-items: center;
-            background: transparent;
-            /* memberi ruang kanan agar ikon kelihatan */
-            padding-right: 1.25rem;
+            background: #3d4f62;
+            padding: 1rem 1.75rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ── Dark part (brand + nav links) ── */
-        .navbar-dark {
-            flex: 1;
-            background: #3d4f62;
-            border-radius: 0 0 2rem 0;
-            /* hanya kanan-bawah melengkung */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-            display: flex;
-            align-items: center;
-            padding: 1.25rem 1.5rem;
-            gap: 2rem;
+        .navbar-outer.nav-hidden {
+            transform: translateY(-110%);
         }
 
         /* ── Navbar notification badge ── */
@@ -188,30 +183,32 @@
     </style>
 </head>
 
-<body class="bg-white min-h-screen flex flex-col">
+<body class="bg-white min-h-screen flex flex-col pt-[80px]">
 
     {{-- ══════════════════════════════ NAVBAR ══════════════════════════════ --}}
     <div class="navbar-outer">
 
-        {{-- Area gelap: brand + nav links --}}
-        <div class="navbar-dark">
-            {{-- Brand --}}
-            <h1 class="text-white text-xl font-bold tracking-wide whitespace-nowrap flex-shrink-0">
+        {{-- Brand --}}
+        <div class="flex items-center gap-4 flex-shrink-0">
+            <div class="bg-white p-2 rounded-xl shadow-sm flex items-center justify-center w-14 h-14">
+                <img src="{{ asset('asset/logo ts.png') }}" alt="Logo TS" class="w-full h-full object-contain">
+            </div>
+            <h1 class="text-white text-xl font-bold tracking-wide whitespace-nowrap">
                 Individual Development Plan
             </h1>
-
-            {{-- Nav links --}}
-            <div class="flex items-center space-x-14 text-white text-sm font-medium ml-auto pr-6">
-                <a href="#Kompetensi" class="hover:text-blue-200 transition-colors duration-150">Kompetensi</a>
-                <a href="#IDP Monitoring" class="hover:text-blue-200 transition-colors duration-150">IDP</a>
-                <a href="#Project Improvement" class="hover:text-blue-200 transition-colors duration-150">Project
-                    Improvement</a>
-                <a href="#LogBook" class="hover:text-blue-200 transition-colors duration-150">LogBook</a>
-            </div>
         </div>
 
-        {{-- Ikon di LUAR area gelap --}}
-        <div class="flex items-center space-x-3 pl-4">
+        {{-- Nav links --}}
+        <div class="flex items-center space-x-14 text-white text-sm font-medium ml-auto pr-6">
+            <a href="#Kompetensi" class="hover:text-blue-200 transition-colors duration-150">Kompetensi</a>
+            <a href="#IDP Monitoring" class="hover:text-blue-200 transition-colors duration-150">IDP</a>
+            <a href="#Project Improvement" class="hover:text-blue-200 transition-colors duration-150">Project
+                Improvement</a>
+            <a href="#LogBook" class="hover:text-blue-200 transition-colors duration-150">LogBook</a>
+        </div>
+
+        {{-- Ikon (Kanan) --}}
+        <div class="flex items-center space-x-3 pl-4 border-l border-white/20">
             {{-- Bell --}}
             <button class="nav-icon-btn" aria-label="Notifikasi">
                 <span class="notif-badge"></span>
@@ -233,73 +230,81 @@
     </div>
 
     {{-- ══════════════════════════════ PROFILE CARD ══════════════════════════════ --}}
-    <div class="bg-[#3d4f62] shadow-md pl-6 pr-0 py-5 ml-6 mt-6 rounded-l-2xl fade-up fade-up-1">
-        <div class="flex items-center gap-6 pl-10">
-            {{-- Avatar --}}
-            <div class="flex-shrink-0">
-                @if ($user->foto ?? false)
-                    <img src="{{ asset('storage/' . $user->foto) }}" alt="Foto Profil"
-                        class="w-28 h-28 rounded-xl object-cover border-2 border-white/30">
-                @else
-                    <div
-                        class="w-28 h-28 rounded-xl bg-white/20 flex items-center justify-center border-2 border-white/30">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-white/70" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path
-                                d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                        </svg>
-                    </div>
-                @endif
+    <div class="bg-[#3d4f62] shadow-md py-6 fade-up fade-up-1">
+        <div class="flex items-stretch divide-x divide-white/20">
+
+            {{-- Bagian 1: Avatar + Nama + Role --}}
+            <div class="flex items-center gap-5 px-10 flex-shrink-0 w-1/3 justify-center py-2">
+                {{-- Avatar --}}
+                <div class="flex-shrink-0">
+                    @if ($user->foto ?? false)
+                        <img src="{{ asset('storage/' . $user->foto) }}" alt="Foto Profil"
+                            class="w-24 h-24 rounded-xl object-cover border-2 border-white/30">
+                    @else
+                        <div
+                            class="w-24 h-24 rounded-xl bg-white/20 flex items-center justify-center border-2 border-white/30">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white/70" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                            </svg>
+                        </div>
+                    @endif
+                </div>
+                <div>
+                    <p class="text-white font-bold text-base leading-tight">{{ $user->nama ?? $user->name }}</p>
+                    <p class="text-white/60 text-xs mt-1">
+                        {{ $user->role === 'kandidat' ? 'Talent' : ucfirst($user->role) }}</p>
+                </div>
             </div>
 
-            {{-- Info Grid --}}
-            <div class="flex-grow grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2 text-sm pl-10">
-                {{-- Kiri --}}
-                <div class="space-y-1.5">
-                    <div class="flex gap-2">
-                        <span class="font-semibold text-white w-24 flex-shrink-0">Nama</span>
-                        <span class="text-white/80">{{ $user->nama ?? $user->name }}</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="font-semibold text-white w-24 flex-shrink-0">Perusahaan</span>
-                        <span class="text-white/80">{{ $user->perusahaan ?? '-' }}</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="font-semibold text-white w-24 flex-shrink-0">Departemen</span>
-                        <span class="text-white/80">{{ $user->departemen ?? '-' }}</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="font-semibold text-white w-24 flex-shrink-0">Role</span>
-                        <span class="text-white/80">{{ ucfirst($user->role) }}</span>
-                    </div>
+            {{-- Bagian 2: Perusahaan, Departemen, Jabatan yang Dituju --}}
+            <div class="px-10 w-1/3 flex flex-col pt-3 space-y-3 text-sm">
+                <div class="flex gap-2">
+                    <span class="font-semibold text-white/70 w-32 flex-shrink-0">Perusahaan</span>
+                    <span class="text-white">{{ $user->perusahaan ?? '-' }}</span>
                 </div>
-                {{-- Kanan --}}
-                <div class="space-y-1.5 pl-16">
-                    <div class="flex gap-2">
-                        <span class="font-semibold text-white w-24 flex-shrink-0">Role Target</span>
-                        <span class="text-white/80">{{ $user->jabatan_target ?? '-' }}</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="font-semibold text-white w-24 flex-shrink-0">Mentor</span>
-                        <span class="text-white/80">{{ $user->mentor->nama ?? '-' }}</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="font-semibold text-white w-24 flex-shrink-0">Atasan</span>
-                        <span class="text-white/80">{{ $user->atasan->nama ?? '-' }}</span>
-                    </div>
+                <div class="flex gap-2">
+                    <span class="font-semibold text-white/70 w-32 flex-shrink-0">Departemen</span>
+                    <span class="text-white">{{ $user->departemen ?? '-' }}</span>
+                </div>
+                <div class="flex gap-2">
+                    <span class="font-semibold text-white/70 w-32 flex-shrink-0">Jabatan yang Dituju</span>
+                    <span class="text-white">{{ $user->jabatan_target ?? '-' }}</span>
                 </div>
             </div>
+
+            {{-- Bagian 3: Mentor, Atasan --}}
+            <div class="px-10 w-1/3 flex flex-col pt-3 space-y-3 text-sm">
+                <div class="flex gap-2">
+                    <span class="font-semibold text-white/70 w-20 flex-shrink-0">Mentor</span>
+                    <span class="text-white">{{ $user->mentor->nama ?? '-' }}</span>
+                </div>
+                <div class="flex gap-2">
+                    <span class="font-semibold text-white/70 w-20 flex-shrink-0">Atasan</span>
+                    <span class="text-white">{{ $user->atasan->nama ?? '-' }}</span>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <div class="w-full px-6 pt-5 pb-6 space-y-6 flex-grow">
 
         {{-- ══════════════════════════════ CHART ROW ══════════════════════════════ --}}
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-6" id="Kompetensi">
+        <div class="space-y-1" id="Kompetensi">
+            <div class="flex items-center gap-2.5 px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#4a5a6a]" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd" />
+                </svg>
+                <h2 class="text-xl font-bold text-[#4a5a6a]">Kompetensi</h2>
+            </div>
 
-            {{-- ── Kompetensi Bar Chart ── --}}
-            <div class="bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-6 fade-up fade-up-2 md:col-span-3">
-                <h2 class="text-base font-bold text-gray-800 mb-4">Kompetensi</h2>
+            {{-- ── Kompetensi Bar Chart (full width) ── --}}
+            <div class="bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-6 fade-up fade-up-2">
                 @php
                     $kompetensiBars = [
                         'Integrity' => $kompetensi->integrity ?? 3,
@@ -318,7 +323,6 @@
                 <div class="space-y-5">
                     @foreach ($kompetensiBars as $label => $score)
                         @php
-                            // Skala 1-5: nilai 1 = 0%, nilai 5 = 100%
                             $pct = (($score - 1) / ($maxScore - 1)) * 100;
                         @endphp
                         <div class="flex items-center gap-3">
@@ -348,152 +352,10 @@
                 </div>
             </div>
 
-            {{-- ── IDP Monitoring Donut Charts ── --}}
-            <div class="bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-6 fade-up fade-up-2 md:col-span-2"
-                id="IDP Monitoring">
-                <h2 class="text-base font-bold text-gray-800 mb-6">IDP Monitoring</h2>
-                @php
-                    // Data disesuaikan urutannya: Exposure (4), Learning (5), Mentoring (6)
-                    $idpData = [
-                        'Exposure' => ['done' => 4, 'total' => 6],
-                        'Learning' => ['done' => 5, 'total' => 6],
-                        'Mentoring' => ['done' => 6, 'total' => 6],
-                    ];
-                    // Palette 6 warna slice (berlawanan jarum jam)
-                    $sliceColors = ['#3d4f62', '#64748b', '#a8a29e', '#cbd5e1', '#f97316', '#f59e0b'];
-                    // Start angles (setiap slice berputar 60 derajat mundur)
-                    $startAngles = [-117.5, -177.5, -237.5, -297.5, -357.5, -57.5];
-                @endphp
-                <div class="flex flex-wrap justify-around gap-4">
-                    @foreach ($idpData as $label => $d)
-                        <div class="flex flex-col items-center gap-3">
-                            <div class="relative w-40 h-40">
-                                <svg viewBox="0 0 100 100" class="w-full h-full">
-                                    @for ($i = 0; $i < 6; $i++)
-                                        @php
-                                            $isDone = $i < $d['done'];
-                                            $color = $isDone ? $sliceColors[$i] : '#ffffff';
-                                            // Panjang slice 55 derajat dari 360, menyisakan 5 derajat gap
-                                            // Circumference = 2 * PI * 40 = 251.3
-                                            // Slice = (55/360) * 251.327 = 38.4
-                                            $strokeDash = '38.4 213';
-                                        @endphp
-                                        <circle cx="50" cy="50" r="40" fill="none"
-                                            stroke="{{ $color }}" stroke-width="18"
-                                            stroke-dasharray="{{ $strokeDash }}"
-                                            transform="rotate({{ $startAngles[$i] }} 50 50)"
-                                            class="transition-colors duration-500" />
-                                    @endfor
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span
-                                        class="text-3xl font-light text-gray-700 tracking-tight">{{ $d['done'] }}/{{ $d['total'] }}</span>
-                                </div>
-                            </div>
-                            <div class="mt-1 bg-white border border-gray-200 px-4 py-1.5 rounded-lg shadow-sm">
-                                <span class="text-xs font-semibold text-gray-800">{{ $label }}</span>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
         </div>
 
-        {{-- ══════════════════════════════ KOMPETENSI FORM ══════════════════════════════ --}}
-        <div class="space-y-1">
-            <div class="flex items-center gap-2.5 px-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
-                    stroke="currentColor" class="h-6 w-6 text-[#4a5a6a]">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
-                </svg>
-                <h2 class="text-xl font-bold text-[#4a5a6a]">Kompetensi</h2>
-            </div>
-
-            <div class="bg-gray-50 border border-gray-100 rounded-2xl shadow-sm p-6 fade-up fade-up-3">
-
-                <form action="#" method="POST">
-                    @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                        {{-- Core Competencies --}}
-                        <div>
-                            <h3 class="text-sm font-bold text-gray-700 mb-3">Core Competencies</h3>
-                            <div class="space-y-2">
-                                @php
-                                    $coreItems = [
-                                        'Integrity' => $kompetensi->integrity ?? 1,
-                                        'Communication' => $kompetensi->communication ?? 1,
-                                        'Innovation & Creativity' => $kompetensi->innovation_creativity ?? 1,
-                                        'Customer Orientation' => $kompetensi->customer_orientation ?? 1,
-                                        'Teamwork' => $kompetensi->teamwork ?? 1,
-                                    ];
-                                @endphp
-                                @foreach ($coreItems as $itemLabel => $itemVal)
-                                    <div
-                                        class="flex items-center justify-between bg-white rounded-xl px-4 py-2.5 border border-gray-100 shadow-sm">
-                                        <div class="flex items-center gap-2 text-sm text-gray-700">
-                                            <span class="text-gray-400">◦</span>
-                                            {{ $itemLabel }}
-                                        </div>
-                                        <select name="core_{{ \Illuminate\Support\Str::slug($itemLabel, '_') }}"
-                                            class="score-select">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                <option value="{{ $i }}" @selected($itemVal == $i)>
-                                                    {{ $i }}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        {{-- Managerial Competencies --}}
-                        <div>
-                            <h3 class="text-sm font-bold text-gray-700 mb-3">Managerial Competencies</h3>
-                            <div class="space-y-2">
-                                @php
-                                    $mngItems = [
-                                        'Leadership' => $kompetensi->leadership ?? 1,
-                                        'Business Acumen' => $kompetensi->business_acumen ?? 1,
-                                        'Problem Solving & Decision Making' => $kompetensi->problem_solving ?? 1,
-                                        'Achievement Orientation' => $kompetensi->achievement_orientation ?? 1,
-                                        'Strategic Thinking' => $kompetensi->strategic_thinking ?? 1,
-                                    ];
-                                @endphp
-                                @foreach ($mngItems as $itemLabel => $itemVal)
-                                    <div
-                                        class="flex items-center justify-between bg-white rounded-xl px-4 py-2.5 border border-gray-100 shadow-sm">
-                                        <div class="flex items-center gap-2 text-sm text-gray-700">
-                                            <span class="text-gray-400">◦</span>
-                                            {{ $itemLabel }}
-                                        </div>
-                                        <select name="mng_{{ \Illuminate\Support\Str::slug($itemLabel, '_') }}"
-                                            class="score-select">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                <option value="{{ $i }}" @selected($itemVal == $i)>
-                                                    {{ $i }}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Submit Kompetensi --}}
-                    <div class="flex justify-end mt-6">
-                        <button type="submit"
-                            class="bg-green-500 hover:bg-green-600 text-white font-semibold px-8 py-2.5 rounded-xl shadow transition-all hover:shadow-md active:scale-95">
-                            Submit
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div> {{-- /wrapper Kompetensi form --}}
-
         {{-- ══════════════════════════════ IDP MONITORING CARDS ══════════════════════════════ --}}
-        <div class="space-y-1">
+        <div class="space-y-1" id="IDP Monitoring">
             <div class="flex items-center gap-2.5 px-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#4a5a6a]" viewBox="0 0 20 20"
                     fill="currentColor">
@@ -504,6 +366,74 @@
             </div>
 
             <div class="bg-gray-50 rounded-2xl shadow-sm p-6 border border-gray-200 fade-up fade-up-4">
+
+                {{-- Smooth Progress Circle Charts --}}
+                @php
+                    $idpChartData = [
+                        'Exposure' => [
+                            'done' => 4,
+                            'total' => 6,
+                            'from' => '#ea580c',
+                            'to' => '#fbbf24',
+                            'id' => 'grad-exposure',
+                        ],
+                        'Learning' => [
+                            'done' => 5,
+                            'total' => 6,
+                            'from' => '#c2410c',
+                            'to' => '#fb923c',
+                            'id' => 'grad-learning',
+                        ],
+                        'Mentoring' => [
+                            'done' => 6,
+                            'total' => 6,
+                            'from' => '#7c2d12',
+                            'to' => '#ea580c',
+                            'id' => 'grad-mentoring',
+                        ],
+                    ];
+                    $r = 38;
+                    $circ = 2 * M_PI * $r; // ≈ 238.76
+                @endphp
+                <div class="flex justify-evenly gap-6 flex-wrap mb-8 pb-6 border-b border-gray-200">
+                    @foreach ($idpChartData as $label => $d)
+                        @php
+                            $pct = $d['done'] / $d['total'];
+                            $filled = $pct * $circ;
+                            $empty = $circ - $filled;
+                        @endphp
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="relative w-48 h-48 drop-shadow-sm">
+                                <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
+                                    {{-- Gradient definition --}}
+                                    <defs>
+                                        <linearGradient id="{{ $d['id'] }}" x1="0%" y1="0%"
+                                            x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="{{ $d['from'] }}" />
+                                            <stop offset="100%" stop-color="{{ $d['to'] }}" />
+                                        </linearGradient>
+                                    </defs>
+                                    {{-- Track (background ring) --}}
+                                    <circle cx="50" cy="50" r="{{ $r }}" fill="none"
+                                        stroke="#f1f5f9" stroke-width="10" />
+                                    {{-- Progress arc --}}
+                                    <circle cx="50" cy="50" r="{{ $r }}" fill="none"
+                                        stroke="url(#{{ $d['id'] }})" stroke-width="10" stroke-linecap="round"
+                                        stroke-dasharray="{{ number_format($filled, 2) }} {{ number_format($empty, 2) }}"
+                                        style="transition: stroke-dasharray 0.8s ease;" />
+                                </svg>
+                                {{-- Center text --}}
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-4xl font-bold"
+                                        style="color:{{ $d['from'] }};">{{ round($pct * 100) }}%</span>
+                                </div>
+                            </div>
+                            <div class="bg-white border border-gray-200 px-5 py-1.5 rounded-xl shadow-sm">
+                                <span class="text-sm font-bold text-gray-800">{{ $label }}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
@@ -613,7 +543,7 @@
             <div class="bg-gray-50 rounded-2xl shadow-sm p-6 border border-gray-200 fade-up fade-up-4">
 
                 {{-- Download Template --}}
-                <div class="flex justify-center mb-5">
+                <div class="flex justify-start mb-5">
                     <a href="#"
                         class="flex items-center gap-2 text-sm font-semibold text-gray-600 border border-gray-300 bg-white hover:bg-gray-100 px-4 py-2 rounded-lg transition shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -648,17 +578,29 @@
                             <thead>
                                 <tr class="bg-gray-100">
                                     <th
-                                        class="text-left px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">
+                                        class="text-center px-4 py-3 font-semibold text-gray-700 border-b border-r border-gray-200">
                                         Judul Project Improvement</th>
+                                    <th class="border-b border-r border-gray-200 w-12"></th>
                                     <th
-                                        class="text-left px-4 py-3 font-semibold text-gray-700 border-b border-gray-200">
+                                        class="text-center px-4 py-3 font-semibold text-gray-700 border-b border-gray-200 w-44">
                                         Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="bg-white border-b border-gray-100">
-                                    <td class="px-4 py-3 text-gray-700" id="uploaded-file-name">–</td>
-                                    <td class="px-4 py-3">
+                                    <td class="px-4 py-3 text-gray-700 border-r border-gray-200"
+                                        id="uploaded-file-name">–</td>
+                                    <td class="py-3 text-center border-r border-gray-200">
+                                        <a href="#" id="download-link" title="Download file"
+                                            class="inline-flex items-center justify-center text-gray-400 hover:text-blue-500 transition-colors duration-150">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                    <td class="text-center px-4 py-3">
                                         <span
                                             class="inline-flex items-center gap-1.5 text-orange-500 text-xs font-semibold">
                                             <span class="w-2 h-2 rounded-full bg-orange-400 inline-block"></span>
@@ -667,11 +609,13 @@
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b border-gray-100">
-                                    <td class="px-4 py-3 text-gray-300">–</td>
+                                    <td class="px-4 py-3 text-gray-300 border-r border-gray-200">–</td>
+                                    <td class="border-r border-gray-200"></td>
                                     <td class="px-4 py-3"></td>
                                 </tr>
                                 <tr class="bg-white">
-                                    <td class="px-4 py-3 text-gray-300">–</td>
+                                    <td class="px-4 py-3 text-gray-300 border-r border-gray-200">–</td>
+                                    <td class="border-r border-gray-200"></td>
                                     <td class="px-4 py-3"></td>
                                 </tr>
                             </tbody>
@@ -712,8 +656,7 @@
                         <h3 class="text-base font-bold text-[#4a5a6a]">Lihat rekap aktivitas LogBook kamu</h3>
                     </div>
                     <p class="text-sm text-gray-500 font-medium">Pantau progress Exposure, Mentoring, dan Learning
-                        secara
-                        lengkap &mdash; klik tombol untuk melihat detail seluruh sesi.</p>
+                        secara lengkap klik tombol untuk melihat detail seluruh sesi.</p>
                 </div>
                 <a href="#"
                     class="bg-green-500 hover:bg-green-600 text-white font-semibold flex-shrink-0 px-6 py-2.5 rounded-xl text-sm shadow transition-all hover:shadow-md active:scale-95">
@@ -732,5 +675,32 @@
     </footer>
 
 </body>
+
+<script>
+    // Hide navbar on scroll down, show on scroll up
+    (function() {
+        const navbar = document.querySelector('.navbar-outer');
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    const currentScrollY = window.scrollY;
+                    if (currentScrollY > lastScrollY && currentScrollY > 80) {
+                        // Scroll down — hide navbar
+                        navbar.classList.add('nav-hidden');
+                    } else {
+                        // Scroll up — show navbar
+                        navbar.classList.remove('nav-hidden');
+                    }
+                    lastScrollY = currentScrollY;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    })();
+</script>
 
 </html>
