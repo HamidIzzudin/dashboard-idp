@@ -12,34 +12,53 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Tampilkan halaman profil kandidat (gambar 3)
+     */
+    public function show(Request $request): View
+    {
+        $user = $request->user()->load(['mentor', 'atasan']);
+        return view('profile.dashboard', compact('user'));
+    }
+
+    /**
+     * Tampilkan form edit profil
      */
     public function edit(Request $request): View
     {
         return view('profile.edit', [
             'user' => $request->user(),
-            'isKandidat' => $request->user()->role === 'kandidat', // flag untuk conditional rendering
         ]);
     }
 
     /**
-     * Update the user's profile information.
+     * Update profil user
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $data = $request->validated();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Handle upload foto
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama jika ada
+            if ($user->foto) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->foto);
+            }
+            $data['foto'] = $request->file('foto')->store('foto-profil', 'public');
         }
 
-        $request->user()->save();
+        // Hapus key foto dari data jika tidak ada upload (agar tidak menimpa nilai lama)
+        if (!isset($data['foto'])) {
+            unset($data['foto']);
+        }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user->fill($data)->save();
+
+        return Redirect::route('profile.show')->with('status', 'profile-updated');
     }
 
     /**
-     * Delete the user's account.
+     * Hapus akun user
      */
     public function destroy(Request $request): RedirectResponse
     {
@@ -48,9 +67,7 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
-
         Auth::logout();
-
         $user->delete();
 
         $request->session()->invalidate();

@@ -23,6 +23,7 @@ class User extends Authenticatable
         'mentor_id',
         'atasan_id',
         'is_active',
+        'foto',
     ];
 
     protected $hidden = [
