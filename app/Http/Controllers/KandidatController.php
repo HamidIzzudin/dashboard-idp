@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KandidatController extends Controller
 {
@@ -12,9 +13,11 @@ class KandidatController extends Controller
         // Ambil relasi hasOne sebagai model tunggal (bisa null jika belum ada data)
         $kompetensi = $user->kandidatKompetensi ?? null;
 
+        $competenciesList = DB::table('competencies')->pluck('name')->toArray();
+
         $notifications = $this->getNotifications();
 
-        return view('kandidat.dashboard', compact('user', 'kompetensi', 'notifications'));
+        return view('kandidat.dashboard', compact('user', 'kompetensi', 'competenciesList', 'notifications'));
     }
 
     public function notifikasi()

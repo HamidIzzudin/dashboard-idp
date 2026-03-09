@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use App\Models\IdpActivity;
 use App\Models\KandidatKompetensi;
 use App\Models\User;
 
@@ -30,7 +33,9 @@ class KandidatDashboardController extends Controller
             
             // Return ke view dengan data
             $notifications = $this->getNotifications();
-            return view('kandidat.dashboard', compact('user', 'kompetensi', 'notifications'));
+            $competenciesList = DB::table('competencies')->pluck('name')->toArray();
+
+            return view('kandidat.dashboard', compact('user', 'kompetensi', 'notifications', 'competenciesList'));
         } catch (\Exception $e) {
             Log::error('KandidatDashboard error: ' . $e->getMessage());
             throw $e;
@@ -57,6 +62,56 @@ class KandidatDashboardController extends Controller
         } catch (\Exception $e) {
             Log::error('KandidatDashboard idpMonitoring error: ' . $e->getMessage());
             throw $e;
+        }
+    }
+
+    public function storeIdpMonitoring(Request $request, $tab = 'exposure')
+    {
+        try {
+            $user = Auth::user();
+            if ($user->role !== 'kandidat') {
+                abort(403, 'Hanya kandidat yang bisa mengakses halaman ini.');
+            }
+
+            // Find IDP Type ID
+            $typeId = DB::table('idp_type')->where('type_name', ucfirst($tab))->value('id');
+            if (!$typeId) {
+                return back()->with('error', 'Tipe IDP tidak valid.');
+            }
+
+            $documentPath = '';
+            $fileName = null;
+            if ($request->hasFile('document')) {
+                $file = $request->file('document');
+                $fileName = $file->getClientOriginalName();
+                $documentPath = $file->store('idp_documents', 'public');
+            }
+
+            $verifyById = null;
+            if ($request->filled('mentor_name')) {
+                $verifyById = User::where('nama', $request->mentor_name)->value('id');
+            }
+
+            IdpActivity::create([
+                'user_id_talent' => $user->id,
+                'type_idp' => $typeId,
+                'verify_by' => $verifyById,
+                'theme' => $request->theme ?? '',
+                'activity_date' => $request->activity_date,
+                'location' => $request->location ?? '',
+                'activity' => $request->activity ?? '',
+                'description' => $request->description ?? '',
+                'action_plan' => $request->action_plan ?? '',
+                'document_path' => $documentPath,
+                'file_name' => $fileName,
+                'status' => 'Pending',
+                'platform' => $request->platform ?? '',
+            ]);
+
+            return redirect()->route('kandidat.dashboard')->with('success', 'IDP Activity berhasil disubmit.');
+        } catch (\Exception $e) {
+            Log::error('KandidatDashboard storeIdpMonitoring error: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan data.');
         }
     }
 

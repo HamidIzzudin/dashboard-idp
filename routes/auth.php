@@ -75,6 +75,8 @@ Route::middleware('auth')->group(function () {
         ->name('kandidat.dashboard');
     Route::get('/kandidat/idp-monitoring/{tab?}', [KandidatDashboardController::class, 'idpMonitoring'])
         ->name('kandidat.idp_monitoring');
+    Route::post('/kandidat/idp-monitoring/{tab?}', [KandidatDashboardController::class, 'storeIdpMonitoring'])
+        ->name('kandidat.idp_monitoring.store');
     Route::get('/kandidat/notifikasi', [KandidatDashboardController::class, 'notifikasi'])
         ->name('kandidat.notifikasi');
 });

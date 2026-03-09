@@ -420,24 +420,47 @@
             {{-- ── Kompetensi Bar Chart (full width) ── --}}
             <div class="bg-gray-50 border border-gray-100 rounded-[10px] shadow-sm p-6 fade-up fade-up-2">
                 @php
-                    $kompetensiBars = [
-                        'Integrity' => $kompetensi->integrity ?? 3,
-                        'Communication' => $kompetensi->communication ?? 4,
-                        'Innovation & Creativity' => $kompetensi->innovation_creativity ?? 3,
-                        'Customer Orientation' => $kompetensi->customer_orientation ?? 2,
-                        'Teamwork' => $kompetensi->teamwork ?? 4,
-                        'Leadership' => $kompetensi->leadership ?? 3,
-                        'Business Acumen' => $kompetensi->business_acumen ?? 3,
-                        'Problem Solving & Decision Making' => $kompetensi->problem_solving ?? 2,
-                        'Achievement Orientation' => $kompetensi->achievement_orientation ?? 3,
-                        'Strategic Thinking' => $kompetensi->strategic_thinking ?? 2,
+                    $kompetensiBars = [];
+                    $columns = [
+                        'integrity',
+                        'communication',
+                        'innovation_creativity',
+                        'customer_orientation',
+                        'teamwork',
+                        'leadership',
+                        'business_acumen',
+                        'problem_solving',
+                        'achievement_orientation',
+                        'strategic_thinking',
                     ];
+
+                    $defaultScores = [3, 4, 3, 2, 4, 3, 3, 2, 3, 2];
+
+                    $fallbackNames = [
+                        'Integrity',
+                        'Communication',
+                        'Innovation & Creativity',
+                        'Customer Orientation',
+                        'Teamwork',
+                        'Leadership',
+                        'Business Acumen',
+                        'Problem Solving & Decision Making',
+                        'Achievement Orientation',
+                        'Strategic Thinking',
+                    ];
+
+                    for ($i = 0; $i < count($columns); $i++) {
+                        $col = $columns[$i];
+                        $name = $competenciesList[$i] ?? $fallbackNames[$i];
+                        $score = $kompetensi->$col ?? $defaultScores[$i];
+                        $kompetensiBars[$name] = $score;
+                    }
                     $maxScore = 5;
                 @endphp
                 <div class="space-y-5">
                     @foreach ($kompetensiBars as $label => $score)
                         @php
-                            $pct = (($score - 1) / ($maxScore - 1)) * 100;
+                            $pct = ($score / $maxScore) * 100;
                         @endphp
                         <div class="flex items-center gap-3">
                             <span
@@ -455,6 +478,7 @@
                     <div class="flex items-center gap-3 pt-1">
                         <span class="w-52 flex-shrink-0"></span>
                         <div class="flex-1 flex justify-between text-xs text-gray-400">
+                            <span>0</span>
                             <span>1</span>
                             <span>2</span>
                             <span>3</span>
@@ -656,26 +680,34 @@
 
             <div class="bg-gray-50 rounded-[10px] shadow-sm p-6 border border-gray-200 fade-up fade-up-4">
 
-                {{-- Download Template --}}
-                <div class="flex justify-start mb-5">
-                    <a href="#"
-                        class="flex items-center gap-2 text-sm font-semibold text-gray-600 border border-gray-300 bg-white hover:bg-gray-100 px-4 py-2 rounded-[10px] transition shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        Download Template
-                    </a>
-                </div>
-
-                <p class="text-xs text-gray-500 mb-2">Unggah projek anda disini</p>
-
-                {{-- Upload Area --}}
                 <form action="#" method="POST" enctype="multipart/form-data" id="upload-form">
                     @csrf
+
+                    {{-- Judul Project Input --}}
+                    <div class="mb-4">
+                        <input type="text" name="judul_project"
+                            class="w-full text-sm border border-gray-300 rounded-[8px] px-4 py-2 focus:outline-none focus:border-green-500 focus:ring-[3px] focus:ring-green-500/20 bg-white transition-all"
+                            placeholder="Judul Project..." required>
+                    </div>
+
+                    {{-- Download Template --}}
+                    <div class="flex justify-start mb-5">
+                        <a href="#"
+                            class="flex items-center gap-2 text-sm font-semibold text-gray-600 border border-gray-300 bg-white hover:bg-gray-100 px-4 py-2 rounded-[10px] transition shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Download Template
+                        </a>
+                    </div>
+
+                    <p class="text-xs text-gray-500 mb-2">Unggah projek anda disini</p>
+
+                    {{-- Upload Area --}}
                     <label for="file-upload"
-                        class="upload-area rounded-[10px] cursor-pointer flex flex-col items-center justify-center py-10 mb-4"
+                        class="upload-area rounded-[10px] cursor-pointer flex flex-col items-center justify-center py-10 mb-5 bg-white"
                         id="drop-zone">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-gray-400 mb-2" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -686,15 +718,22 @@
                         <input id="file-upload" name="project_file" type="file" class="sr-only">
                     </label>
 
+                    {{-- Submit Project --}}
+                    <div class="flex justify-end mb-6">
+                        <button type="submit"
+                            class="bg-gradient-to-br from-[#10b981] to-[#059669] hover:from-[#16a34a] hover:to-[#15803d] text-white font-semibold px-8 py-2.5 rounded-[10px] transition-all active:scale-95 shadow-[0_10px_15px_-3px_rgba(16,185,129,0.3)] hover:shadow-[0_6px_20px_rgba(34,197,94,0.5)] active:shadow-[0_3px_10px_rgba(34,197,94,0.3)]">
+                            Submit
+                        </button>
+                    </div>
+
                     {{-- Project Table --}}
-                    <div class="overflow-hidden rounded-[10px] border border-gray-200 mb-5">
-                        <table class="w-full text-sm">
+                    <div class="overflow-hidden rounded-[10px] border border-gray-200">
+                        <table class="w-full text-sm bg-white">
                             <thead>
                                 <tr class="bg-gray-100">
                                     <th
                                         class="text-center px-4 py-3 font-semibold text-gray-700 border-b border-r border-gray-200">
                                         Judul Project Improvement</th>
-                                    <th class="border-b border-r border-gray-200 w-12"></th>
                                     <th
                                         class="text-center px-4 py-3 font-semibold text-gray-700 border-b border-gray-200 w-44">
                                         Status</th>
@@ -702,18 +741,8 @@
                             </thead>
                             <tbody>
                                 <tr class="bg-white border-b border-gray-100">
-                                    <td class="px-4 py-3 text-gray-700 border-r border-gray-200"
+                                    <td class="px-4 py-3 text-gray-700 border-r border-gray-200 text-center"
                                         id="uploaded-file-name">–</td>
-                                    <td class="py-3 text-center border-r border-gray-200">
-                                        <a href="#" id="download-link" title="Download file"
-                                            class="inline-flex items-center justify-center text-gray-400 hover:text-blue-500 transition-colors duration-150">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                            </svg>
-                                        </a>
-                                    </td>
                                     <td class="text-center px-4 py-3">
                                         <span
                                             class="inline-flex items-center gap-1.5 text-orange-500 text-xs font-semibold">
@@ -723,25 +752,15 @@
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b border-gray-100">
-                                    <td class="px-4 py-3 text-gray-300 border-r border-gray-200">–</td>
-                                    <td class="border-r border-gray-200"></td>
+                                    <td class="px-4 py-3 text-gray-300 border-r border-gray-200 text-center">–</td>
                                     <td class="px-4 py-3"></td>
                                 </tr>
                                 <tr class="bg-white">
-                                    <td class="px-4 py-3 text-gray-300 border-r border-gray-200">–</td>
-                                    <td class="border-r border-gray-200"></td>
+                                    <td class="px-4 py-3 text-gray-300 border-r border-gray-200 text-center">–</td>
                                     <td class="px-4 py-3"></td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-
-                    {{-- Submit Project --}}
-                    <div class="flex justify-end">
-                        <button type="submit"
-                            class="bg-gradient-to-br from-[#10b981] to-[#059669] hover:from-[#16a34a] hover:to-[#15803d] text-white font-semibold px-8 py-2.5 rounded-[10px] transition-all active:scale-95 shadow-[0_10px_15px_-3px_rgba(16,185,129,0.3)] hover:shadow-[0_6px_20px_rgba(34,197,94,0.5)] active:shadow-[0_3px_10px_rgba(34,197,94,0.3)]">
-                            Submit
-                        </button>
                     </div>
                 </form>
             </div>

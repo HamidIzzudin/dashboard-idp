@@ -365,18 +365,19 @@
 
             {{-- White Form Content --}}
             <div class="form-bg p-8 relative z-20 -mt-2 shadow-sm">
-                <form action="#" method="POST" class="space-y-4">
+                <form action="{{ route('kandidat.idp_monitoring.store', ['tab' => $tab]) }}" method="POST"
+                    enctype="multipart/form-data" class="space-y-4">
                     @csrf
 
                     @if ($tab == 'learning')
                         <div class="grid grid-cols-[140px_1fr] items-center gap-6">
                             <label class="text-sm font-semibold text-gray-800">Sumber</label>
-                            <input type="text" class="form-input" placeholder="" required>
+                            <input type="text" name="activity" class="form-input" placeholder="" required>
                         </div>
                     @else
                         <div class="grid grid-cols-[140px_1fr] items-center gap-6">
                             <label class="text-sm font-semibold text-gray-800">Mentor</label>
-                            <input type="text" list="mentor-list" class="form-input"
+                            <input type="text" name="mentor_name" list="mentor-list" class="form-input"
                                 placeholder="Ketik nama mentor..." required>
                             <datalist id="mentor-list">
                                 @foreach ($mentors as $m)
@@ -388,46 +389,48 @@
 
                     <div class="grid grid-cols-[140px_1fr] items-center gap-6">
                         <label class="text-sm font-semibold text-gray-800">Tema</label>
-                        <input type="text" class="form-input" placeholder="" required>
+                        <input type="text" name="theme" class="form-input" placeholder="" required>
                     </div>
 
                     <div class="grid grid-cols-[140px_1fr] items-center gap-6">
                         <label class="text-sm font-semibold text-gray-800">Tanggal</label>
-                        <input type="date" class="form-input" required>
+                        <input type="date" name="activity_date" class="form-input" required>
                     </div>
 
                     @if ($tab == 'learning')
                         <div class="grid grid-cols-[140px_1fr] items-center gap-6">
                             <label class="text-sm font-semibold text-gray-800">Platform</label>
-                            <input type="text" class="form-input" placeholder="" required>
+                            <input type="text" name="platform" class="form-input" placeholder="" required>
                         </div>
                     @else
                         <div class="grid grid-cols-[140px_1fr] items-center gap-6">
                             <label class="text-sm font-semibold text-gray-800">Lokasi</label>
-                            <input type="text" class="form-input" placeholder="" required>
+                            <input type="text" name="location" class="form-input" placeholder="" required>
                         </div>
                     @endif
 
                     @if ($tab == 'mentoring')
                         <div class="grid grid-cols-[140px_1fr] items-start gap-6 pt-1">
                             <label class="text-sm font-semibold text-gray-800 pt-3">Deskripsi</label>
-                            <textarea class="form-textarea h-24" placeholder="" required></textarea>
+                            <textarea name="description" class="form-textarea h-24" placeholder="" required></textarea>
                         </div>
 
                         <div class="grid grid-cols-[140px_1fr] items-start gap-6 pt-1">
                             <label class="text-sm font-semibold text-gray-800 pt-3">Action Plan</label>
-                            <textarea class="form-textarea h-24" placeholder="" required></textarea>
+                            <textarea name="action_plan" class="form-textarea h-24" placeholder="" required></textarea>
                         </div>
                     @else
-                        <div class="grid grid-cols-[140px_1fr] items-start gap-6 pt-1">
-                            <label class="text-sm font-semibold text-gray-800 pt-3">Aktivitas</label>
-                            <textarea class="form-textarea h-24" placeholder="" required></textarea>
-                        </div>
+                        @if ($tab == 'exposure')
+                            <div class="grid grid-cols-[140px_1fr] items-start gap-6 pt-1">
+                                <label class="text-sm font-semibold text-gray-800 pt-3">Aktivitas</label>
+                                <textarea name="activity" class="form-textarea h-24" placeholder="" required></textarea>
+                            </div>
 
-                        <div class="grid grid-cols-[140px_1fr] items-start gap-6 pt-1">
-                            <label class="text-sm font-semibold text-gray-800 pt-3">Deskripsi</label>
-                            <textarea class="form-textarea h-24" placeholder="" required></textarea>
-                        </div>
+                            <div class="grid grid-cols-[140px_1fr] items-start gap-6 pt-1">
+                                <label class="text-sm font-semibold text-gray-800 pt-3">Deskripsi</label>
+                                <textarea name="description" class="form-textarea h-24" placeholder="" required></textarea>
+                            </div>
+                        @endif
                     @endif
 
                     <div class="grid grid-cols-[140px_1fr] items-center gap-6 pt-2">
@@ -440,7 +443,7 @@
                                         d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                                 </svg>
                                 Upload
-                                <input type="file" class="hidden" required>
+                                <input type="file" name="document" class="hidden" required>
                             </label>
                         </div>
                     </div>
