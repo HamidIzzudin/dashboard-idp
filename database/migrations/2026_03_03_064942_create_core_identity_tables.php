@@ -48,11 +48,12 @@ return new class extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('role')->nullable();
-            $table->string('nama_lengkap');
+            $table->string('nama');
+            $table->string('email')->unique();
             $table->foreignId('perusahaan_id')->constrained('company');
             $table->foreignId('department_id')->constrained('department');
             $table->foreignId('position_id')->constrained('position');
+            $table->foreignID('role_id')->constrained('role');
             $table->timestamps();
         });
 

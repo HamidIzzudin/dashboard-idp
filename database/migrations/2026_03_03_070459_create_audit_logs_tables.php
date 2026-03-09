@@ -14,10 +14,7 @@ return new class extends Migration
         Schema::create('status_log', function (Blueprint $table) {
             $table->id(); // PK id [cite: 122]
             $table->string('name_tabel'); // Key name_tabel [cite: 123]
-            $table->unsignedBigInteger('record_id'); // Key record_id [cite: 126]
-            $table->string('old_status')->nullable(); // Key old_status [cite: 128]
-            $table->string('new_status'); // Key new_status [cite: 130]
-            $table->foreignId('change_by')->constrained('users'); // FK change_by [cite: 132]
+            $table->enum('status', ['Pending', 'Approved', 'Rejected',]); // Key status [cite: 126]
             $table->string('remark')->nullable(); // Key remark [cite: 134]
             $table->timestamps(); // created_at [cite: 136]
         });

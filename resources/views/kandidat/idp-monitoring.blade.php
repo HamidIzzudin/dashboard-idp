@@ -380,7 +380,7 @@
                                 placeholder="Ketik nama mentor..." required>
                             <datalist id="mentor-list">
                                 @foreach ($mentors as $m)
-                                    <option value="{{ $m->nama_lengkap }}">{{ $m->nama_lengkap }}</option>
+                                    <option value="{{ $m->nama }}">
                                 @endforeach
                             </datalist>
                         </div>
