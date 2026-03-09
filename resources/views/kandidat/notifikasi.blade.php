@@ -234,87 +234,35 @@
 
         {{-- Notifications List --}}
         <div class="space-y-3">
-
-            {{-- Notif 1 (Unread, Success) --}}
-            <div class="notif-card notif-unread">
-                <div class="notif-icon-wrap icon-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <div class="flex-1">
-                    <div class="flex justify-between items-start mb-1">
-                        <h3 class="font-bold text-gray-800 text-base">Submit IDP Berhasil</h3>
-                        <span class="text-xs text-teal-600 font-semibold bg-teal-50 px-2 py-1 rounded-md">Baru</span>
+            @foreach($notifications as $notif)
+                <div class="notif-card {{ !$notif['is_read'] ? 'notif-unread' : '' }}">
+                    <div class="notif-icon-wrap icon-{{ $notif['type'] }}">
+                        @if($notif['type'] == 'success')
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        @elseif($notif['type'] == 'info')
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        @elseif($notif['type'] == 'warning')
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        @endif
                     </div>
-                    <p class="text-sm text-gray-600 mb-2 leading-relaxed">Formulir <span
-                            class="font-semibold">Exposure</span> Anda telah berhasil dikirim dan sedang menunggu
-                        tinjauan dari mentor/atasan.</p>
-                    <span class="text-xs text-gray-400 font-medium">10 menit yang lalu</span>
-                </div>
-            </div>
-
-            {{-- Notif 2 (Info) --}}
-            <div class="notif-card">
-                <div class="notif-icon-wrap icon-info">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <div class="flex-1">
-                    <div class="flex justify-between items-start mb-1">
-                        <h3 class="font-bold text-gray-800 text-base">Review Mentor Selesai</h3>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-gray-800 text-base">{!! $notif['title'] !!}</h3>
+                            @if($notif['badge'])
+                                <span class="text-xs text-teal-600 font-semibold bg-teal-50 px-2 py-1 rounded-md">{{ $notif['badge'] }}</span>
+                            @endif
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2 leading-relaxed">{!! $notif['desc'] !!}</p>
+                        <span class="text-xs text-gray-400 font-medium">{{ $notif['time'] }}</span>
                     </div>
-                    <p class="text-sm text-gray-600 mb-2 leading-relaxed">Project Improvement Anda berjudul <span
-                            class="font-semibold">"Sistem Logistik Baru"</span> telah direview oleh mentor Anda. Klik
-                        untuk melihat feedback.</p>
-                    <span class="text-xs text-gray-400 font-medium">2 jam yang lalu</span>
                 </div>
-            </div>
-
-            {{-- Notif 3 (Warning) --}}
-            <div class="notif-card">
-                <div class="notif-icon-wrap icon-warning">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <div class="flex-1">
-                    <div class="flex justify-between items-start mb-1">
-                        <h3 class="font-bold text-gray-800 text-base">Pengingat LogBook</h3>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-2 leading-relaxed">Anda belum mengisi LogBook untuk aktivitas
-                        <span class="font-semibold">Mentoring</span> minggu ini. Pastikan untuk memperbaruinya segera.
-                    </p>
-                    <span class="text-xs text-gray-400 font-medium">Kemarin, 14:30</span>
-                </div>
-            </div>
-
-            {{-- Notif 4 (Success) --}}
-            <div class="notif-card">
-                <div class="notif-icon-wrap icon-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <div class="flex-1">
-                    <div class="flex justify-between items-start mb-1">
-                        <h3 class="font-bold text-gray-800 text-base">Pembaruan Kompetensi</h3>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-2 leading-relaxed">Atasan Anda telah memberikan penilaian
-                        kompetensi terbaru untuk Anda. Periksa grafik pada dashboard.</p>
-                    <span class="text-xs text-gray-400 font-medium">3 hari yang lalu</span>
-                </div>
-            </div>
-
+            @endforeach
         </div>
 
     </div>

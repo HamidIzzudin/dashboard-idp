@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
 
     // Route kandidat dashboard
     Route::get('/kandidat/dashboard', [KandidatController::class, 'dashboard'])->name('kandidat.dashboard');
+    Route::get('/kandidat/notifikasi', [KandidatController::class, 'notifikasi'])->name('kandidat.notifikasi');
 });
 
 require __DIR__ . '/auth.php';

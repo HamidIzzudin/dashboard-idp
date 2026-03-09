@@ -243,12 +243,13 @@
 
         {{-- Ikon (Kanan) --}}
         <div class="flex items-center space-x-3 pl-4 border-l border-white/20">
-<<<<<<< HEAD
 
             {{-- Bell Dropdown --}}
             <div class="relative" id="bell-wrapper">
                 <button class="nav-icon-btn" aria-label="Notifikasi" id="bell-btn" onclick="toggleDropdown('bell-dropdown', 'bell-btn')">
-                    <span class="notif-badge"></span>
+                    @if($notifications->where('is_read', false)->count() > 0)
+                        <span class="notif-badge"></span>
+                    @endif
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z" />
                         <path d="M10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
@@ -260,30 +261,24 @@
                         <span class="text-xs text-teal-500 font-semibold cursor-pointer hover:underline">Tandai semua</span>
                     </div>
                     <ul class="divide-y divide-gray-50 max-h-64 overflow-y-auto">
-                        <li class="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 transition-colors cursor-pointer">
-                            <span class="w-2 h-2 mt-1.5 rounded-full bg-teal-500 flex-shrink-0"></span>
-                            <div>
-                                <p class="text-sm text-gray-700 font-medium">IDP kamu telah diperbarui</p>
-                                <p class="text-xs text-gray-400 mt-0.5">2 jam yang lalu</p>
-                            </div>
-                        </li>
-                        <li class="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 transition-colors cursor-pointer">
-                            <span class="w-2 h-2 mt-1.5 rounded-full bg-teal-500 flex-shrink-0"></span>
-                            <div>
-                                <p class="text-sm text-gray-700 font-medium">Sesi mentoring dijadwalkan</p>
-                                <p class="text-xs text-gray-400 mt-0.5">Hari ini, 09:00</p>
-                            </div>
-                        </li>
-                        <li class="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 transition-colors cursor-pointer">
-                            <span class="w-2 h-2 mt-1.5 rounded-full bg-gray-300 flex-shrink-0"></span>
-                            <div>
-                                <p class="text-sm text-gray-500">Logbook bulan lalu sudah disetujui</p>
-                                <p class="text-xs text-gray-400 mt-0.5">Kemarin</p>
-                            </div>
-                        </li>
+                        @foreach($notifications as $notif)
+                            <li class="px-4 py-3 flex items-start gap-3 hover:bg-gray-50 transition-colors cursor-pointer">
+                                @if(!$notif['is_read'])
+                                    <span class="w-2 h-2 mt-1.5 rounded-full bg-teal-500 flex-shrink-0"></span>
+                                @else
+                                    <span class="w-2 h-2 mt-1.5 rounded-full bg-gray-300 flex-shrink-0"></span>
+                                @endif
+                                <div>
+                                    <p class="text-sm {{ !$notif['is_read'] ? 'text-gray-700 font-medium' : 'text-gray-500' }}">
+                                        {!! $notif['title'] !!}
+                                    </p>
+                                    <p class="text-xs text-gray-400 mt-0.5">{{ $notif['time'] }}</p>
+                                </div>
+                            </li>
+                        @endforeach
                     </ul>
                     <div class="px-4 py-2.5 border-t border-gray-100 text-center">
-                        <span class="text-xs text-gray-400 font-medium cursor-pointer hover:text-teal-600 transition-colors">Lihat semua notifikasi</span>
+                        <a href="{{ route('kandidat.notifikasi') }}" class="text-xs text-gray-400 font-medium hover:text-teal-600 transition-colors">Lihat semua notifikasi</a>
                     </div>
                 </div>
             </div>
@@ -326,24 +321,6 @@
                 </div>
             </div>
 
-=======
-            {{-- Bell --}}
-            <a href="{{ route('kandidat.notifikasi') }}" class="nav-icon-btn" aria-label="Notifikasi">
-                <span class="notif-badge"></span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path
-                        d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z" />
-                    <path d="M10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                </svg>
-            </a>
-            {{-- Profile --}}
-            <button class="nav-icon-btn" aria-label="Profil">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clip-rule="evenodd" />
-                </svg>
-            </button>
->>>>>>> b44ab4db2dde78cae58c56e7c6129eb5ae59d938
         </div>
 
     </div>
