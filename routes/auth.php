@@ -71,12 +71,16 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/kandidat/dashboard', [KandidatDashboardController::class, 'index'])
-        ->name('kandidat.dashboard');
-    Route::get('/kandidat/idp-monitoring/{tab?}', [KandidatDashboardController::class, 'idpMonitoring'])
-        ->name('kandidat.idp_monitoring');
-    Route::post('/kandidat/idp-monitoring/{tab?}', [KandidatDashboardController::class, 'storeIdpMonitoring'])
-        ->name('kandidat.idp_monitoring.store');
-    Route::get('/kandidat/notifikasi', [KandidatDashboardController::class, 'notifikasi'])
-        ->name('kandidat.notifikasi');
+    Route::get('/talent/dashboard', [\App\Http\Controllers\TalentDashboardController::class, 'index'])
+        ->name('talent.dashboard');
+    Route::get('/talent/competency', [\App\Http\Controllers\TalentDashboardController::class, 'competency'])
+        ->name('talent.competency');
+    Route::post('/talent/competency', [\App\Http\Controllers\TalentDashboardController::class, 'storeCompetency'])
+        ->name('talent.competency.store');
+    Route::get('/talent/idp-monitoring/{tab?}', [\App\Http\Controllers\TalentDashboardController::class, 'idpMonitoring'])
+        ->name('talent.idp_monitoring');
+    Route::post('/talent/idp-monitoring/{tab?}', [\App\Http\Controllers\TalentDashboardController::class, 'storeIdpMonitoring'])
+        ->name('talent.idp_monitoring.store');
+    Route::get('/talent/notifikasi', [\App\Http\Controllers\TalentDashboardController::class, 'notifikasi'])
+        ->name('talent.notifikasi');
 });
