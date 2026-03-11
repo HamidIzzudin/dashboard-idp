@@ -14,7 +14,7 @@ class TalentDashboardController extends Controller
     public function index()
     {
         try {
-            $user = Auth::user()->load(['company', 'department', 'position', 'role', 'promotion_plan.targetPosition']);
+            $user = Auth::user()->load(['company', 'department', 'position', 'role', 'promotion_plan.targetPosition', 'mentor', 'atasan']);
             
             if ($user->role->role_name !== 'talent' && $user->role->role_name !== 'talent') {
                 abort(403, 'Hanya talent/talent yang bisa mengakses dashboard ini.');
@@ -107,7 +107,7 @@ class TalentDashboardController extends Controller
     public function idpMonitoring($tab = 'exposure')
     {
         try {
-            $user = Auth::user();
+            $user = Auth::user()->load(['company', 'department', 'position', 'role', 'mentor', 'atasan']);
             if ($user->role->role_name !== 'talent' && $user->role->role_name !== 'talent') {
                 abort(403, 'Hanya talent/talent yang bisa mengakses halaman ini.');
             }
@@ -182,6 +182,30 @@ class TalentDashboardController extends Controller
         $user = Auth::user();
         $notifications = $this->getNotifications();
         return view('talent.notifikasi', compact('user', 'notifications'));
+    }
+
+    public function markAllNotificationsRead(Request $request)
+    {
+        // Tandai semua notifikasi sebagai sudah dibaca
+        // Jika ada tabel notifications di DB, update di sini.
+        // Contoh: DB::table('notifications')->where('user_id', Auth::id())->update(['is_read' => true]);
+
+        return redirect()->back()->with('success', 'Semua notifikasi telah ditandai sebagai dibaca.');
+    }
+
+    public function logbookDetail()
+    {
+        $user = Auth::user()->load(['company', 'department', 'position', 'role', 'mentor', 'atasan']);
+        $notifications = $this->getNotifications();
+
+        // Data dummy – ganti dengan query DB saat tabel logbook sudah tersedia
+        $exposureData  = [];
+        $mentoringData = [];
+        $learningData  = [];
+
+        return view('talent.logbook-detail', compact(
+            'user', 'notifications', 'exposureData', 'mentoringData', 'learningData'
+        ));
     }
 
     private function getNotifications() {

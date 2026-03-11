@@ -178,14 +178,14 @@
 
     {{-- ══════════════════════════════ NAVBAR ══════════════════════════════ --}}
     <div class="navbar-outer">
-        <div class="flex items-center gap-4 flex-shrink-0">
+        <a href="{{ route('talent.dashboard') }}" class="flex items-center gap-4 flex-shrink-0 hover:opacity-90 transition-opacity">
             <div class="bg-white p-2 rounded-[10px] shadow-sm flex items-center justify-center w-14 h-14">
                 <img src="{{ asset('asset/logo ts.png') }}" alt="Logo TS" class="w-full h-full object-contain">
             </div>
             <h1 class="text-white text-xl font-bold tracking-wide whitespace-nowrap">
                 Individual Development Plan
             </h1>
-        </div>
+        </a>
 
         <div class="flex items-center space-x-14 text-white text-sm font-medium ml-auto pr-6">
             <a href="{{ route('talent.dashboard') }}#Kompetensi"
@@ -199,15 +199,10 @@
         </div>
 
         <div class="flex items-center space-x-3 pl-4 border-l border-white/20">
-<<<<<<< HEAD:resources/views/kandidat/notifikasi.blade.php
-            <a href="{{ route('kandidat.notifikasi') }}" class="nav-icon-btn" aria-label="Notifikasi">
+            <a href="{{ route('talent.notifikasi') }}" class="nav-icon-btn" aria-label="Notifikasi">
                 @if($notifications->where('is_read', false)->count() > 0)
                     <span class="notif-badge"></span>
                 @endif
-=======
-            <a href="{{ route('talent.notifikasi') }}" class="nav-icon-btn" aria-label="Notifikasi">
-                <span class="notif-badge"></span>
->>>>>>> c642f9cce40d2b8babd67def90e3e3f679ff4937:resources/views/talent/notifikasi.blade.php
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path
                         d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z" />
@@ -228,7 +223,7 @@
 
         {{-- Back Link --}}
         <div class="mb-4">
-            <a href="{{ route('kandidat.dashboard') }}"
+            <a href="{{ route('talent.dashboard') }}"
                 class="inline-flex items-center text-sm font-semibold text-gray-500 hover:text-[#0d9488] transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2.5">
@@ -247,7 +242,7 @@
                 </svg>
                 <h2 class="text-2xl font-bold text-[#2e3746] animate-title">Notifikasi</h2>
             </div>
-            <form action="{{ route('kandidat.notifikasi.markAllRead') }}" method="POST">
+            <form action="{{ route('talent.notifikasi.markAllRead') }}" method="POST">
                 @csrf
                 <button type="submit" class="text-sm font-semibold text-teal-600 hover:text-teal-700 transition">Tandai semua
                     dibaca</button>

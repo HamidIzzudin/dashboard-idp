@@ -231,14 +231,14 @@
 
     {{-- ══════════════════════════════ NAVBAR ══════════════════════════════ --}}
     <div class="navbar-outer">
-        <div class="flex items-center gap-4 flex-shrink-0">
+        <a href="{{ route('talent.dashboard') }}" class="flex items-center gap-4 flex-shrink-0 hover:opacity-90 transition-opacity">
             <div class="bg-white p-2 rounded-[10px] shadow-sm flex items-center justify-center w-14 h-14">
                 <img src="{{ asset('asset/logo ts.png') }}" alt="Logo TS" class="w-full h-full object-contain">
             </div>
             <h1 class="text-white text-xl font-bold tracking-wide whitespace-nowrap">
                 Individual Development Plan
             </h1>
-        </div>
+        </a>
 
         <div class="flex items-center space-x-14 text-white text-sm font-medium ml-auto pr-6">
             <a href="{{ route('talent.dashboard') }}#Kompetensi"
@@ -252,15 +252,10 @@
         </div>
 
         <div class="flex items-center space-x-3 pl-4 border-l border-white/20">
-<<<<<<< HEAD:resources/views/kandidat/idp-monitoring.blade.php
-            <a href="{{ route('kandidat.notifikasi') }}" class="nav-icon-btn" aria-label="Notifikasi">
+            <a href="{{ route('talent.notifikasi') }}" class="nav-icon-btn" aria-label="Notifikasi">
                 @if($notifications->where('is_read', false)->count() > 0)
                     <span class="notif-badge"></span>
                 @endif
-=======
-            <a href="{{ route('talent.notifikasi') }}" class="nav-icon-btn" aria-label="Notifikasi">
-                <span class="notif-badge"></span>
->>>>>>> c642f9cce40d2b8babd67def90e3e3f679ff4937:resources/views/talent/idp-monitoring.blade.php
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path
                         d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6z" />
@@ -319,15 +314,15 @@
                 </div>
             </div>
 
-            {{-- Bagian 3: Role, Email --}}
+            {{-- Bagian 3: Mentor, Atasan --}}
             <div class="px-10 w-1/3 flex flex-col pt-3 space-y-3 text-sm border-l border-white/20">
                 <div class="flex gap-2">
-                    <span class="font-semibold text-white/70 w-24 flex-shrink-0">Role</span>
-                    <span class="text-white capitalize">{{ optional($user->role)->role_name ?? '-' }}</span>
+                    <span class="font-semibold text-white/70 w-24 flex-shrink-0">Mentor</span>
+                    <span class="text-white">{{ optional($user->mentor)->nama ?? '-' }}</span>
                 </div>
                 <div class="flex gap-2">
-                    <span class="font-semibold text-white/70 w-24 flex-shrink-0">Email</span>
-                    <span class="text-white">{{ $user->email ?? '-' }}</span>
+                    <span class="font-semibold text-white/70 w-24 flex-shrink-0">Atasan</span>
+                    <span class="text-white">{{ optional($user->atasan)->nama ?? '-' }}</span>
                 </div>
             </div>
 

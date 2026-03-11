@@ -163,21 +163,21 @@
     {{-- ══════════════════════════════ NAVBAR ══════════════════════════════ --}}
     <div class="navbar-outer">
         {{-- Brand --}}
-        <div class="flex items-center gap-4 flex-shrink-0">
+        <a href="{{ route('talent.dashboard') }}" class="flex items-center gap-4 flex-shrink-0 hover:opacity-90 transition-opacity">
             <div class="bg-white p-2 rounded-[10px] shadow-sm flex items-center justify-center w-14 h-14">
                 <img src="{{ asset('asset/logo ts.png') }}" alt="Logo TS" class="w-full h-full object-contain">
             </div>
             <h1 class="text-white text-xl font-bold tracking-wide whitespace-nowrap">
                 Individual Development Plan
             </h1>
-        </div>
+        </a>
 
         {{-- Nav links --}}
         <div class="flex items-center space-x-14 text-white text-sm font-medium ml-auto pr-6">
-            <a href="{{ route('kandidat.dashboard') }}#Kompetensi" class="hover:text-blue-200 transition-colors duration-150">Kompetensi</a>
-            <a href="{{ route('kandidat.dashboard') }}#IDP Monitoring" class="hover:text-blue-200 transition-colors duration-150">IDP</a>
-            <a href="{{ route('kandidat.dashboard') }}#Project Improvement" class="hover:text-blue-200 transition-colors duration-150">Project Improvement</a>
-            <a href="{{ route('kandidat.dashboard') }}#LogBook" class="text-blue-200 border-b border-blue-200 pb-0.5">LogBook</a>
+            <a href="{{ route('talent.dashboard') }}#Kompetensi" class="hover:text-blue-200 transition-colors duration-150">Kompetensi</a>
+            <a href="{{ route('talent.dashboard') }}#IDP Monitoring" class="hover:text-blue-200 transition-colors duration-150">IDP</a>
+            <a href="{{ route('talent.dashboard') }}#Project Improvement" class="hover:text-blue-200 transition-colors duration-150">Project Improvement</a>
+            <a href="{{ route('talent.dashboard') }}#LogBook" class="text-blue-200 border-b border-blue-200 pb-0.5">LogBook</a>
         </div>
 
         {{-- Ikon (Kanan) --}}
@@ -198,7 +198,7 @@
                     class="dropdown-panel hidden absolute right-0 mt-3 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50">
                     <div class="px-4 py-3 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
                         <span class="text-sm font-bold text-gray-700">Notifikasi</span>
-                        <form action="{{ route('kandidat.notifikasi.markAllRead') }}" method="POST">
+                        <form action="{{ route('talent.notifikasi.markAllRead') }}" method="POST">
                             @csrf
                             <button type="submit" class="text-xs text-teal-500 font-semibold cursor-pointer hover:underline">Tandai semua</button>
                         </form>
@@ -221,7 +221,7 @@
                         @endforeach
                     </ul>
                     <div class="px-4 py-2.5 border-t border-gray-100 text-center">
-                        <a href="{{ route('kandidat.notifikasi') }}"
+                        <a href="{{ route('talent.notifikasi') }}"
                             class="text-xs text-gray-400 font-medium hover:text-teal-600 transition-colors">Lihat semua notifikasi</a>
                     </div>
                 </div>
@@ -243,7 +243,7 @@
                     </div>
                     <ul class="py-1">
                         <li>
-                            <a href="{{ route('profile.show') }}"
+                            <a href="{{ route('profile.edit') }}"
                                 class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
@@ -272,53 +272,61 @@
     {{-- ══════════════════════════════ PROFILE CARD ══════════════════════════════ --}}
     <div class="bg-[#2e3746] shadow-md py-6 fade-up fade-up-1">
         <div class="flex items-stretch divide-x divide-white/20">
+
             {{-- Bagian 1: Avatar + Nama + Role --}}
             <div class="flex items-center gap-5 px-10 flex-shrink-0 w-1/3 justify-center py-2">
+                {{-- Avatar --}}
                 <div class="flex-shrink-0">
                     @if ($user->foto ?? false)
                         <img src="{{ asset('storage/' . $user->foto) }}" alt="Foto Profil"
                             class="w-24 h-24 rounded-[10px] object-cover border-2 border-white/30">
                     @else
-                        <div class="w-24 h-24 rounded-[10px] bg-white/20 flex items-center justify-center border-2 border-white/30">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white/70" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        <div
+                            class="w-24 h-24 rounded-[10px] bg-white/20 flex items-center justify-center border-2 border-white/30">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white/70"
+                                fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                             </svg>
                         </div>
                     @endif
                 </div>
                 <div>
                     <p class="text-white font-bold text-base leading-tight">{{ $user->nama ?? $user->name }}</p>
-                    <p class="text-white/60 text-xs mt-1">{{ $user->role === 'kandidat' ? 'Talent' : ucfirst($user->role) }}</p>
+                    <p class="text-white/60 text-xs mt-1">
+                        {{ ucfirst($user->role->role_name ?? 'Talent') }}</p>
                 </div>
             </div>
 
             {{-- Bagian 2: Perusahaan, Departemen, Jabatan yang Dituju --}}
-            <div class="px-10 w-1/3 flex flex-col pt-3 space-y-3 text-sm">
+            <div class="px-10 w-1/3 flex flex-col pt-3 space-y-3 text-sm border-l border-white/20">
                 <div class="flex gap-2">
-                    <span class="font-semibold text-white/70 w-32 flex-shrink-0 text-xs">Perusahaan</span>
-                    <span class="text-white text-xs">{{ $user->perusahaan ?? '-' }}</span>
+                    <span class="font-semibold text-white/70 w-32 flex-shrink-0">Perusahaan</span>
+                    <span class="text-white">{{ optional($user->company)->nama_company ?? '-' }}</span>
                 </div>
                 <div class="flex gap-2">
-                    <span class="font-semibold text-white/70 w-32 flex-shrink-0 text-xs text-nowrap">Departemen</span>
-                    <span class="text-white text-xs">{{ $user->departemen ?? '-' }}</span>
+                    <span class="font-semibold text-white/70 w-32 flex-shrink-0">Departemen</span>
+                    <span class="text-white">{{ optional($user->department)->nama_department ?? '-' }}</span>
                 </div>
                 <div class="flex gap-2">
-                    <span class="font-semibold text-white/70 w-32 flex-shrink-0 text-xs text-nowrap">Jabatan yang Dituju</span>
-                    <span class="text-white text-xs">{{ $user->jabatan_target ?? '-' }}</span>
+                    <span class="font-semibold text-white/70 w-32 flex-shrink-0">Jabatan yang dituju</span>
+                    <span
+                        class="text-white">{{ optional(optional($user->promotion_plan)->targetPosition)->position_name ?? '-' }}</span>
                 </div>
             </div>
 
             {{-- Bagian 3: Mentor, Atasan --}}
-            <div class="px-10 w-1/3 flex flex-col pt-3 space-y-3 text-sm">
+            <div class="px-10 w-1/3 flex flex-col pt-3 space-y-3 text-sm border-l border-white/20">
                 <div class="flex gap-2">
-                    <span class="font-semibold text-white/70 w-20 flex-shrink-0 text-xs">Mentor</span>
-                    <span class="text-white text-xs">{{ $user->mentor->nama ?? '-' }}</span>
+                    <span class="font-semibold text-white/70 w-24 flex-shrink-0">Mentor</span>
+                    <span class="text-white">{{ optional($user->mentor)->nama ?? '-' }}</span>
                 </div>
                 <div class="flex gap-2">
-                    <span class="font-semibold text-white/70 w-20 flex-shrink-0 text-xs">Atasan</span>
-                    <span class="text-white text-xs">{{ $user->atasan->nama ?? '-' }}</span>
+                    <span class="font-semibold text-white/70 w-24 flex-shrink-0">Atasan</span>
+                    <span class="text-white">{{ optional($user->atasan)->nama ?? '-' }}</span>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -326,7 +334,7 @@
     <div class="max-w-7xl mx-auto px-6 pt-4 pb-6 fade-up">
         {{-- Back Link --}}
         <div class="mb-2">
-            <a href="{{ route('kandidat.dashboard') }}"
+            <a href="{{ route('talent.dashboard') }}"
                 class="inline-flex items-center text-sm font-semibold text-gray-500 hover:text-[#3d4f62] transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2.5">

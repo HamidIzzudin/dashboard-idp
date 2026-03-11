@@ -262,7 +262,7 @@
                     class="dropdown-panel hidden absolute right-0 mt-3 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50">
                     <div class="px-4 py-3 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
                         <span class="text-sm font-bold text-gray-700">Notifikasi</span>
-                        <form action="{{ route('kandidat.notifikasi.markAllRead') }}" method="POST">
+                        <form action="{{ route('talent.notifikasi.markAllRead') }}" method="POST">
                             @csrf
                             <button type="submit" class="text-xs text-teal-500 font-semibold cursor-pointer hover:underline">Tandai semua</button>
                         </form>
@@ -391,15 +391,15 @@
                 </div>
             </div>
 
-            {{-- Bagian 3: Role, Email --}}
+            {{-- Bagian 3: Mentor, Atasan --}}
             <div class="px-10 w-1/3 flex flex-col pt-3 space-y-3 text-sm border-l border-white/20">
                 <div class="flex gap-2">
-                    <span class="font-semibold text-white/70 w-24 flex-shrink-0">Role</span>
-                    <span class="text-white capitalize">{{ optional($user->role)->role_name ?? '-' }}</span>
+                    <span class="font-semibold text-white/70 w-24 flex-shrink-0">Mentor</span>
+                    <span class="text-white">{{ optional($user->mentor)->nama ?? '-' }}</span>
                 </div>
                 <div class="flex gap-2">
-                    <span class="font-semibold text-white/70 w-24 flex-shrink-0">Email</span>
-                    <span class="text-white">{{ $user->email ?? '-' }}</span>
+                    <span class="font-semibold text-white/70 w-24 flex-shrink-0">Atasan</span>
+                    <span class="text-white">{{ optional($user->atasan)->nama ?? '-' }}</span>
                 </div>
             </div>
 
@@ -795,7 +795,7 @@
                     <p class="text-sm text-gray-500 font-medium">Pantau progress Exposure, Mentoring, dan Learning
                         secara lengkap klik tombol untuk melihat detail seluruh sesi.</p>
                 </div>
-                <a href="{{ route('kandidat.logbook.detail') }}"
+                <a href="{{ route('talent.logbook.detail') }}"
                     class="bg-gradient-to-br from-[#10b981] to-[#059669] hover:from-[#16a34a] hover:to-[#15803d] text-white font-semibold flex-shrink-0 px-6 py-2.5 rounded-[10px] text-sm transition-all active:scale-95 shadow-[0_10px_15px_-3px_rgba(16,185,129,0.3)] hover:shadow-[0_6px_20px_rgba(34,197,94,0.5)] active:shadow-[0_3px_10px_rgba(34,197,94,0.3)]">
                     Lihat Detail
                 </a>

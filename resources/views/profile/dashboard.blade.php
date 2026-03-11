@@ -91,10 +91,10 @@
         </div>
 
         <div class="flex items-center space-x-14 text-white text-sm font-medium ml-auto pr-6">
-            <a href="{{ route('kandidat.dashboard') }}#Kompetensi" class="hover:text-blue-200 transition-colors">Kompetensi</a>
-            <a href="{{ route('kandidat.dashboard') }}#IDP Monitoring" class="hover:text-blue-200 transition-colors">IDP</a>
-            <a href="{{ route('kandidat.dashboard') }}#Project Improvement" class="hover:text-blue-200 transition-colors">Project Improvement</a>
-            <a href="{{ route('kandidat.dashboard') }}#LogBook" class="hover:text-blue-200 transition-colors">LogBook</a>
+            <a href="{{ route('talent.dashboard') }}#Kompetensi" class="hover:text-blue-200 transition-colors">Kompetensi</a>
+            <a href="{{ route('talent.dashboard') }}#IDP Monitoring" class="hover:text-blue-200 transition-colors">IDP</a>
+            <a href="{{ route('talent.dashboard') }}#Project Improvement" class="hover:text-blue-200 transition-colors">Project Improvement</a>
+            <a href="{{ route('talent.dashboard') }}#LogBook" class="hover:text-blue-200 transition-colors">LogBook</a>
         </div>
 
         <div class="flex items-center space-x-3 pl-4 border-l border-white/20">
@@ -112,7 +112,7 @@
                 <div id="bell-dropdown" class="dropdown-panel hidden absolute right-0 mt-3 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50">
                     <div class="px-4 py-3 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
                         <span class="text-sm font-bold text-gray-700">Notifikasi</span>
-                        <form action="{{ route('kandidat.notifikasi.markAllRead') }}" method="POST">
+                        <form action="{{ route('talent.notifikasi.markAllRead') }}" method="POST">
                             @csrf
                             <button type="submit" class="text-xs text-teal-500 font-semibold cursor-pointer hover:underline">Tandai semua</button>
                         </form>
@@ -135,7 +135,7 @@
                         @endforeach
                     </ul>
                     <div class="px-4 py-2.5 border-t border-gray-100 text-center">
-                        <a href="{{ route('kandidat.notifikasi') }}" class="text-xs text-gray-400 font-medium hover:text-teal-600 transition-colors">Lihat semua notifikasi</a>
+                        <a href="{{ route('talent.notifikasi') }}" class="text-xs text-gray-400 font-medium hover:text-teal-600 transition-colors">Lihat semua notifikasi</a>
                     </div>
                 </div>
             </div>
@@ -154,7 +154,7 @@
                     </div>
                     <ul class="py-1">
                         <li>
-                            <a href="{{ route('profile.show') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                            <a href="{{ route('profile.edit') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                                 </svg>
@@ -183,7 +183,7 @@
 
         {{-- Back Link --}}
         <div class="mb-4">
-            <a href="{{ route('kandidat.dashboard') }}"
+            <a href="{{ route('talent.dashboard') }}"
                 class="inline-flex items-center text-sm font-semibold text-gray-500 hover:text-[#3d4f62] transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2.5">
