@@ -335,7 +335,7 @@
         {{-- Back Link --}}
         <div class="mb-2">
             <a href="{{ route('talent.dashboard') }}"
-                class="inline-flex items-center text-sm font-semibold text-gray-500 hover:text-[#3d4f62] transition-colors">
+                class="inline-flex items-center text-sm font-semibold text-gray-500 hover:text-[#0d9488] transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -359,38 +359,40 @@
                     <table class="w-full text-sm text-left">
                         <thead>
                             <tr class="bg-gray-50 border-b border-gray-100">
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Mentor</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Tema</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Tanggal</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Lokasi</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Aktivitas</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center min-w-[320px]">Deskripsi</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Dokumentasi</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center min-w-[384px]">FeedBack</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Status</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Mentor</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Tema</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Tanggal</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Lokasi</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Aktivitas</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Deskripsi</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Dokumentasi</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">FeedBack</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
-                            @foreach($exposureData as $data)
+                            @forelse($exposureData as $data)
                             <tr class="hover:bg-gray-50/50 transition-colors">
                                 <td class="px-6 py-4 font-medium text-gray-700 whitespace-nowrap border-r border-gray-100">{{ $data['mentor'] }}</td>
                                 <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100">{{ $data['tema'] }}</td>
-                                <td class="px-6 py-4 text-gray-500 whitespace-nowrap border-r border-gray-100">{{ $data['tanggal'] }}</td>
-                                <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100 text-center">{{ $data['lokasi'] }}</td>
-                                <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100 text-center">{{ $data['aktivitas'] }}</td>
-                                <td class="px-6 py-4 text-gray-500 border-r border-gray-100 text-center min-w-[320px]">
+                                <td class="px-6 py-4 text-gray-500 whitespace-nowrap border-r border-gray-100">{{ date('d M Y', strtotime($data['tanggal'])) }}</td>
+                                <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100 text-left">{{ $data['lokasi'] }}</td>
+                                <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100 text-left">{{ $data['aktivitas'] }}</td>
+                                <td class="px-6 py-4 text-gray-500 border-r border-gray-100 text-left">
+                                    {{ $data['deskripsi'] ?? '-' }}
                                 </td>
                                 <td class="px-6 py-4 text-emerald-600 font-medium whitespace-nowrap border-r border-gray-100">
-                                    <div class="w-40 border border-gray-200 rounded-lg h-10 mx-auto flex items-center justify-center gap-1 text-xs">
+                                    <div class="w-40 border border-gray-200 rounded-lg h-10 mr-auto flex items-center justify-start px-3 gap-1 text-xs">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                                         </svg>
-                                        {{ $data['dokumentasi'] }}
+                                        {{ $data['dokumentasi'] ? \Illuminate\Support\Str::limit($data['dokumentasi'], 15) : 'Tidak ada' }}
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-gray-500 border-r border-gray-100 min-w-[384px]">
+                                <td class="px-6 py-4 text-gray-500 border-r border-gray-100 text-left">
+                                    -
                                 </td>
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-6 py-4 text-left">
                                     @if($data['status'] === 'Approve')
                                         <span class="inline-flex items-center gap-1 text-emerald-600 font-bold px-3 py-1 rounded-full text-xs">
                                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
@@ -399,32 +401,16 @@
                                     @else
                                         <span class="inline-flex items-center gap-1 text-orange-500 font-bold px-3 py-1 rounded-full text-xs">
                                             <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
-                                            Pending
+                                            {{ $data['status'] }}
                                         </span>
                                     @endif
                                 </td>
                             </tr>
-                            @endforeach
-                            @for($i=0; $i<8; $i++)
+                            @empty
                             <tr>
-                                <td class="px-6 py-6 border-r border-gray-100">&nbsp;</td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 font-bold text-center">
-                                    @if($i == 0)
-                                    <span class="inline-flex items-center gap-1 text-red-500 px-3 py-1 rounded-full text-xs">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                                        Rejected
-                                    </span>
-                                    @endif
-                                </td>
+                                <td colspan="9" class="px-6 py-8 text-left text-gray-500">Belum ada aktivitas Exposure yang dicatat.</td>
                             </tr>
-                            @endfor
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -439,61 +425,60 @@
                     <table class="w-full text-sm text-left">
                         <thead>
                             <tr class="bg-gray-50 border-b border-gray-100">
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Mentor</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Tema</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Tanggal</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Lokasi</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center min-w-[320px]">Deskripsi</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center min-w-[320px]">Action Plan</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Dokumentasi</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center min-w-[384px]">FeedBack</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Status</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Mentor</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Tema</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Tanggal</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Lokasi</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Deskripsi</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Action Plan</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Dokumentasi</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">FeedBack</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
-                            @foreach($mentoringData as $data)
+                            @forelse($mentoringData as $data)
                             <tr class="hover:bg-gray-50/50 transition-colors">
                                 <td class="px-6 py-4 font-medium text-gray-700 whitespace-nowrap border-r border-gray-100">{{ $data['mentor'] }}</td>
                                 <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100">{{ $data['tema'] }}</td>
-                                <td class="px-6 py-4 text-gray-500 whitespace-nowrap border-r border-gray-100">{{ $data['tanggal'] }}</td>
-                                <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100 text-center">{{ $data['lokasi'] }}</td>
-                                <td class="px-6 py-4 text-gray-500 border-r border-gray-100 min-w-[320px]">
-                                    {{ $data['deskripsi'] ?? '' }}
+                                <td class="px-6 py-4 text-gray-500 whitespace-nowrap border-r border-gray-100">{{ date('d M Y', strtotime($data['tanggal'])) }}</td>
+                                <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100 text-left">{{ $data['lokasi'] }}</td>
+                                <td class="px-6 py-4 text-gray-500 border-r border-gray-100 text-left">
+                                    {{ $data['deskripsi'] ?? '-' }}
                                 </td>
-                                <td class="px-6 py-4 text-gray-600 font-medium border-r border-gray-100 min-w-[320px]">
-                                    {{ $data['action_plan'] ?? '' }}
+                                <td class="px-6 py-4 text-gray-600 font-medium border-r border-gray-100">
+                                    {{ $data['action_plan'] ?? '-' }}
                                 </td>
                                 <td class="px-6 py-4 text-emerald-600 font-medium border-r border-gray-100">
-                                    <div class="w-40 border border-gray-200 rounded-lg h-10 mx-auto flex items-center justify-center gap-1 text-xs">
+                                    <div class="w-40 border border-gray-200 rounded-lg h-10 mr-auto flex items-center justify-start px-3 gap-1 text-xs">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                                         </svg>
-                                        {{ $data['dokumentasi'] }}
+                                        {{ $data['dokumentasi'] ? \Illuminate\Support\Str::limit($data['dokumentasi'], 15) : 'Tidak ada' }}
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-gray-500 border-r border-gray-100 min-w-[384px]">
+                                <td class="px-6 py-4 text-gray-500 border-r border-gray-100 text-left">
+                                    -
                                 </td>
-                                <td class="px-6 py-4 text-center">
-                                    <span class="inline-flex items-center gap-1 text-emerald-600 font-bold px-3 py-1 rounded-full text-xs">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                        {{ $data['status'] }}
-                                    </span>
+                                <td class="px-6 py-4 text-left">
+                                    @if($data['status'] === 'Approve')
+                                        <span class="inline-flex items-center gap-1 text-emerald-600 font-bold px-3 py-1 rounded-full text-xs">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                            Approve
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 text-orange-500 font-bold px-3 py-1 rounded-full text-xs">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                                            {{ $data['status'] }}
+                                        </span>
+                                    @endif
                                 </td>
                             </tr>
-                            @endforeach
-                            @for($i=0; $i<8; $i++)
+                            @empty
                             <tr>
-                                <td class="px-6 py-6 border-r border-gray-100">&nbsp;</td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6"></td>
+                                <td colspan="9" class="px-6 py-8 text-left text-gray-500">Belum ada aktivitas Mentoring yang dicatat.</td>
                             </tr>
-                            @endfor
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -508,51 +493,52 @@
                     <table class="w-full text-sm text-left">
                         <thead>
                             <tr class="bg-gray-50 border-b border-gray-100">
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Sumber</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Tema</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Tanggal</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Platform</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Dokumentasi</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center min-w-[384px]">FeedBack</th>
-                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-center">Status</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Sumber</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Tema</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Tanggal</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Platform</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Dokumentasi</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">FeedBack</th>
+                                <th class="px-6 py-4 font-bold text-[#3d4f62] whitespace-nowrap text-left min-w-[220px]">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
-                            @foreach($learningData as $data)
+                            @forelse($learningData as $data)
                             <tr class="hover:bg-gray-50/50 transition-colors">
                                 <td class="px-6 py-4 font-medium text-gray-700 whitespace-nowrap border-r border-gray-100">{{ $data['sumber'] }}</td>
                                 <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100">{{ $data['tema'] }}</td>
-                                <td class="px-6 py-4 text-gray-500 whitespace-nowrap border-r border-gray-100">{{ $data['tanggal'] }}</td>
-                                <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100 text-center">{{ $data['platform'] }}</td>
+                                <td class="px-6 py-4 text-gray-500 whitespace-nowrap border-r border-gray-100">{{ date('d M Y', strtotime($data['tanggal'])) }}</td>
+                                <td class="px-6 py-4 text-gray-600 whitespace-nowrap border-r border-gray-100 text-left">{{ $data['platform'] }}</td>
                                 <td class="px-6 py-4 text-emerald-600 font-medium border-r border-gray-100">
-                                    <div class="w-40 border border-gray-200 rounded-lg h-10 mx-auto flex items-center justify-center gap-1 text-xs">
+                                    <div class="w-40 border border-gray-200 rounded-lg h-10 mr-auto flex items-center justify-start px-3 gap-1 text-xs">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                                         </svg>
-                                        {{ $data['dokumentasi'] }}
+                                        {{ $data['dokumentasi'] ? \Illuminate\Support\Str::limit($data['dokumentasi'], 15) : 'Tidak ada' }}
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-gray-500 border-r border-gray-100 min-w-[384px]">
+                                <td class="px-6 py-4 text-gray-500 border-r border-gray-100 text-left">
+                                    -
                                 </td>
-                                <td class="px-6 py-4 text-center">
-                                    <span class="inline-flex items-center gap-1 text-emerald-600 font-bold px-3 py-1 rounded-full text-xs">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                        {{ $data['status'] }}
-                                    </span>
+                                <td class="px-6 py-4 text-left">
+                                    @if($data['status'] === 'Approve')
+                                        <span class="inline-flex items-center gap-1 text-emerald-600 font-bold px-3 py-1 rounded-full text-xs">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                            Approve
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 text-orange-500 font-bold px-3 py-1 rounded-full text-xs">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                                            {{ $data['status'] }}
+                                        </span>
+                                    @endif
                                 </td>
                             </tr>
-                            @endforeach
-                            @for($i=0; $i<8; $i++)
+                            @empty
                             <tr>
-                                <td class="px-6 py-6 border-r border-gray-100">&nbsp;</td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6 border-r border-gray-100"></td>
-                                <td class="px-6 py-6"></td>
+                                <td colspan="7" class="px-6 py-8 text-left text-gray-500">Belum ada aktivitas Learning yang dicatat.</td>
                             </tr>
-                            @endfor
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

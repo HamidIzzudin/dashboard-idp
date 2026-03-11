@@ -236,13 +236,13 @@ class TalentDashboardController extends Controller
     {
         try {
             $request->validate([
-                'title'        => 'required|string|max:255',
-                'project_file' => 'required|file|max:10240|mimes:png,jpg,jpeg,pdf,doc,docx,xls,xlsx,ppt,pptx,zip',
+                'judul_project' => 'required|string|max:255',
+                'project_file'  => 'required|file|max:10240|mimes:png,jpg,jpeg,pdf,doc,docx,xls,xlsx,ppt,pptx,zip',
             ], [
-                'title.required'        => 'Judul project harus diisi.',
-                'project_file.required' => 'File project harus diunggah.',
-                'project_file.max'      => 'Ukuran file tidak boleh melebihi 10 MB.',
-                'project_file.mimes'    => 'Format file tidak didukung.',
+                'judul_project.required' => 'Judul project harus diisi.',
+                'project_file.required'  => 'File project harus diunggah.',
+                'project_file.max'       => 'Ukuran file tidak boleh melebihi 10 MB.',
+                'project_file.mimes'     => 'Format file tidak didukung.',
             ]);
 
             $documentPath = $request->file('project_file')
@@ -250,12 +250,12 @@ class TalentDashboardController extends Controller
 
             ImprovementProject::create([
                 'user_id_talent' => Auth::id(),
-                'title'          => $request->title,
+                'title'          => $request->judul_project,
                 'document_path'  => $documentPath,
                 'status'         => 'Pending',
             ]);
 
-            return redirect()->route('talent.dashboard')
+            return redirect(route('talent.dashboard') . '#Project Improvement')
                 ->with('success_project', 'Project Improvement berhasil disubmit.');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -287,10 +287,50 @@ class TalentDashboardController extends Controller
         $user = Auth::user()->load(['company', 'department', 'position', 'role', 'mentor', 'atasan']);
         $notifications = $this->getNotifications();
 
-        // Data dummy – ganti dengan query DB saat tabel logbook sudah tersedia
+        $activities = \App\Models\IdpActivity::with(['type', 'verifier'])
+            ->where('user_id_talent', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         $exposureData  = [];
         $mentoringData = [];
         $learningData  = [];
+
+        foreach ($activities as $act) {
+            $typeName = $act->type ? $act->type->type_name : '';
+            
+            if ($typeName === 'Exposure') {
+                $exposureData[] = [
+                    'mentor' => $act->verifier ? $act->verifier->nama : '-',
+                    'tema' => $act->theme,
+                    'tanggal' => $act->activity_date,
+                    'lokasi' => $act->location,
+                    'aktivitas' => $act->activity,
+                    'dokumentasi' => $act->file_name,
+                    'status' => $act->status,
+                ];
+            } elseif ($typeName === 'Mentoring') {
+                $mentoringData[] = [
+                    'mentor' => $act->verifier ? $act->verifier->nama : '-',
+                    'tema' => $act->theme,
+                    'tanggal' => $act->activity_date,
+                    'lokasi' => $act->location,
+                    'deskripsi' => $act->description,
+                    'action_plan' => $act->action_plan,
+                    'dokumentasi' => $act->file_name,
+                    'status' => $act->status,
+                ];
+            } elseif ($typeName === 'Learning') {
+                $learningData[] = [
+                    'sumber' => $act->activity,
+                    'tema' => $act->theme,
+                    'tanggal' => $act->activity_date,
+                    'platform' => $act->platform,
+                    'dokumentasi' => $act->file_name,
+                    'status' => $act->status,
+                ];
+            }
+        }
 
         return view('talent.logbook-detail', compact(
             'user', 'notifications', 'exposureData', 'mentoringData', 'learningData'
