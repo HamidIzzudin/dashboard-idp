@@ -224,14 +224,14 @@
     <div class="navbar-outer">
 
         {{-- Brand --}}
-        <div class="flex items-center gap-4 flex-shrink-0">
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="flex items-center gap-4 flex-shrink-0 hover:opacity-90 transition-opacity">
             <div class="bg-white p-2 rounded-[10px] shadow-sm flex items-center justify-center w-14 h-14">
                 <img src="{{ asset('asset/logo ts.png') }}" alt="Logo TS" class="w-full h-full object-contain">
             </div>
             <h1 class="text-white text-xl font-bold tracking-wide whitespace-nowrap">
                 Individual Development Plan
             </h1>
-        </div>
+        </a>
 
         {{-- Nav links --}}
         <div class="flex items-center space-x-14 text-white text-sm font-medium ml-auto pr-6">

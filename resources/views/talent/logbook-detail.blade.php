@@ -177,7 +177,7 @@
             <a href="{{ route('talent.dashboard') }}#Kompetensi" class="hover:text-blue-200 transition-colors duration-150">Kompetensi</a>
             <a href="{{ route('talent.dashboard') }}#IDP Monitoring" class="hover:text-blue-200 transition-colors duration-150">IDP</a>
             <a href="{{ route('talent.dashboard') }}#Project Improvement" class="hover:text-blue-200 transition-colors duration-150">Project Improvement</a>
-            <a href="{{ route('talent.dashboard') }}#LogBook" class="text-blue-200 border-b border-blue-200 pb-0.5">LogBook</a>
+            <a href="{{ route('talent.dashboard') }}#LogBook" class="hover:text-blue-200 transition-colors duration-150">LogBook</a>
         </div>
 
         {{-- Ikon (Kanan) --}}
